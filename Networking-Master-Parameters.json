@@ -64,7 +64,7 @@
             ]
         },
         "nsg": {
-            "defaultValue": {
+            "value": {
                 "resourceGroup": "iac-uks-network-poc-rg",
                 "securityGroups": [
                     {
