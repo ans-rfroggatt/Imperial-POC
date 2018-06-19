@@ -38,18 +38,7 @@
     },
     "variables": {
       "hubID": "[if(parameters('peer'), resourceId(parameters('hub').resourceGroup, 'Microsoft.Network/virtualNetworks/', parameters('hub').vnet.name), '')]",
-      "spokeID": "[resourceId('Microsoft.Network/virtualNetworks/', parameters('spoke').vnet.name)]",
-      "copy": [
-          {
-              "name": "subnets",
-              "count": "[length(parameters('spoke').subnets)]",
-              "input": {
-                "name": "[parameters('spoke').subnets[copyIndex('subnets')].name]",
-                "addressPrefix": "[parameters('spoke').subnets[copyIndex('subnets')].addressPrefix]",
-                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks/', parameters('spoke').vnet.name), '/subnets/', parameters('spoke').subnets[copyIndex('subnets')].name)]"
-              }
-          }
-      ]
+      "spokeID": "[resourceId('Microsoft.Network/virtualNetworks/', parameters('spoke').vnet.name)]"
     },
     "resources": [
       {
@@ -69,7 +58,7 @@
               "properties": {
                 "addressPrefix": "[parameters('spoke').subnets[copyIndex('subnets')].addressPrefix]",
                 "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('spoke').subnets.networkSecurityGroup)]",
+                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('spoke').subnets[copyIndex('subnets')].networkSecurityGroup)]",
                   "location": "[resourceGroup().location]"
                 }
               }
