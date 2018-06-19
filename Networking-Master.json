@@ -43,8 +43,8 @@
         }
     },
     "variables": {
-      "hubUrl": "[uri(deployment().properties.templateLink.uri, 'vnet-hub.json')]",
-      "spokeUrl": "[uri(deployment().properties.templateLink.uri, 'vnet-spoke.json')]",
+      "hubUrl": "[uri(deployment().properties.templateLink.uri, 'Networking-HUB.json')]",
+      "spokeUrl": "[uri(deployment().properties.templateLink.uri, 'Networking-Spokes.json')]",
       "hubDeploymentName": "[concat('deployHub-', parameters('hub').vnet.name)]"
     },
     "resources": [
