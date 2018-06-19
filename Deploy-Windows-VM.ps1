@@ -18,7 +18,7 @@ $pip = New-AzureRmPublicIpAddress -ResourceGroupName $resourceGroup -Location $l
   -Name "Windows-Desktop-PIP-$rand" -AllocationMethod Static -IdleTimeoutInMinutes 4
 
 # Get vNet and Subnet ID
-$vnet = Get-AzureRmVirtualNetwork -Name Workspace-VN -ResourceGroupName iac-uks-network-poc-rg
+$vnet = Get-AzureRmVirtualNetwork -Name Workspace-vNet -ResourceGroupName iac-uks-network-poc-rg
 
 # Get Network Security Group
 $nsg = Get-AzureRmNetworkSecurityGroup -Name Windows-Desktop-NSG -ResourceGroupName iac-uks-network-poc-rg
