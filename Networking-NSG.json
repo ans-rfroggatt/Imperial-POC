@@ -35,7 +35,7 @@
     "variables": {},
     "resources": [
         {
-            "name": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].name]",
+            "name": "[parameters('nsg').securitygroups[copyIndex()].name]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2017-10-01",
             "location": "[resourceGroup().location]",
@@ -46,16 +46,16 @@
             "properties": {
                 "securityRules": [
                     {
-                        "name": "[concat(parameters('nsg').securitygroups.name, '-rule', copyIndex(1))]",
+                        "name": "NSG-Rule-1",
                         "properties": {
                             "protocol": "*",
                             "sourcePortRange": "*",
-                            "destinationPortRange": "[parameters('nsg').securitygroups.destinationPortRange]",
-                            "sourceAddressPrefix": "[parameters('nsg').securitygroups.sourceAddressPrefix]",
+                            "destinationPortRange": "[parameters('nsg').securitygroups[copyIndex()].destinationPortRange]",
+                            "sourceAddressPrefix": "[parameters('nsg').securitygroups[copyIndex()].sourceAddressPrefix]",
                             "destinationAddressPrefix": "VirtualNetwork",
                             "access": "Allow",
                             "priority": "100",
-                            "direction": "[parameters('nsg').securitygroups.direction]"
+                            "direction": "[parameters('nsg').securitygroups[copyIndex()].direction]"
                         }
                     }
                 ]

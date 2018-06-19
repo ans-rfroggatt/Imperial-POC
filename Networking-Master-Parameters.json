@@ -6,7 +6,7 @@
             "value": {
                 "resourceGroup": "iac-uks-network-poc-rg",
                 "vnet": {
-                    "name": "Hub-VN",
+                    "name": "Hub-vNet",
                     "addressPrefixes": [
                         "10.0.0.0/16"
                     ]
@@ -30,7 +30,7 @@
                 {
                     "resourceGroup": "iac-uks-network-poc-rg",
                     "vnet": {
-                        "name": "Workspace-VN",
+                        "name": "Workspace-vNet",
                         "addressPrefixes": [
                             "10.1.0.0/16"
                         ]
@@ -51,7 +51,7 @@
                 {
                     "resourceGroup": "iac-uks-network-poc-rg",
                     "vnet": {
-                        "name": "Batch-VN",
+                        "name": "Batch-vNet",
                         "addressPrefixes": [
                             "10.2.0.0/16"
                         ]
