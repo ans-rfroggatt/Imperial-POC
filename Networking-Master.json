@@ -116,6 +116,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
             "resourceGroup": "[parameters('hub').resourceGroup]",
+            "dependsOn": [
+                "deployNsg"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
@@ -147,7 +150,8 @@
             "apiVersion": "2017-05-10",
             "resourceGroup": "[parameters('spokes')[copyIndex()].resourceGroup]",
             "dependsOn": [
-                "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]"
+                "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]",
+                "deployNsg"
             ],
             "copy": {
                 "name": "spokecopy",
