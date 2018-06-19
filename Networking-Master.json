@@ -11,7 +11,7 @@
                     { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24" },
                     { "name": "Management", "addressPrefix": "10.0.1.0/24" }
                 ],
-                "createGateway": true,
+                "createGateway": false,
                 "gatewaySku": "Basic"
             },
             "metadata": { 
