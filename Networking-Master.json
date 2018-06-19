@@ -94,6 +94,13 @@
                         "destinationPortRange": "22",
                         "sourceAddressPrefix": "*",
                         "direction": "Inbound"
+                    },
+                    {
+                        "name": "Batch-NSG",
+                        "protocol": "*",
+                        "destinationPortRange": "22",
+                        "sourceAddressPrefix": "*",
+                        "direction": "Inbound"
                     }
                 ]
             }

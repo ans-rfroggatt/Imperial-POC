@@ -38,11 +38,13 @@
                     "subnets": [
                         {
                             "name": "Windows",
-                            "addressPrefix": "10.1.0.0/24"
+                            "addressPrefix": "10.1.0.0/24",
+                            "networkSecurityGroup": "Windows-Desktop-NSG"
                         },
                         {
                             "name": "Linux",
-                            "addressPrefix": "10.1.1.0/24"
+                            "addressPrefix": "10.1.1.0/24",
+                            "networkSecurityGroup": "Linux-Desktop-NSG"
                         }
                     ]
                 },
@@ -57,7 +59,8 @@
                     "subnets": [
                         {
                             "name": "Batch-Compute",
-                            "addressPrefix": "10.2.0.0/24"
+                            "addressPrefix": "10.2.0.0/24",
+                            "networkSecurityGroup": "Batch-NSG"
                         }
                     ]
                 }
@@ -76,6 +79,13 @@
                     },
                     {
                         "name": "Linux-Desktop-NSG",
+                        "protocol": "*",
+                        "destinationPortRange": "22",
+                        "sourceAddressPrefix": "*",
+                        "direction": "Inbound"
+                    },
+                    {
+                        "name": "Batch-NSG",
                         "protocol": "*",
                         "destinationPortRange": "22",
                         "sourceAddressPrefix": "*",
