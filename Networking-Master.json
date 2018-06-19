@@ -19,8 +19,7 @@
                     },
                     {
                         "name": "Management",
-                        "addressPrefix": "10.0.1.0/24",
-                        "networkSecurityGroup": "Management-NSG"
+                        "addressPrefix": "10.0.1.0/24"
                     }
                 ],
                 "createGateway": false,
@@ -65,7 +64,8 @@
                     "subnets": [
                         {
                             "name": "BatchCompute",
-                            "addressPrefix": "10.2.0.0/24"
+                            "addressPrefix": "10.2.0.0/24",
+                            "networkSecurityGroup": "Batch-NSG"
                         }
                     ]
                 }

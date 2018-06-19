@@ -20,6 +20,14 @@
                     "destinationPortRange": "22",
                     "sourceAddressPrefix": "*",
                     "direction": "Inbound"
+                },
+                {
+                    "resourceGroup":"iac-uks-network-poc-rg",
+                    "name": "Batch-NSG",
+                    "protocol": "*",
+                    "destinationPortRange": "22",
+                    "sourceAddressPrefix": "*",
+                    "direction": "Inbound"
                 }
             ]
         }

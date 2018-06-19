@@ -14,13 +14,11 @@
                 "subnets": [
                     {
                         "name": "GatewaySubnet",
-                        "addressPrefix": "10.0.0.0/24",
-                        "networkSecurityGroup": ""
+                        "addressPrefix": "10.0.0.0/24"
                     },
                     {
                         "name": "Management",
-                        "addressPrefix": "10.0.1.0/24",
-                        "networkSecurityGroup": "Management-NSG"
+                        "addressPrefix": "10.0.1.0/24"
                     }
                 ],
                 "createGateway": false,
@@ -78,6 +76,14 @@
                 {
                     "resourceGroup":"iac-uks-network-poc-rg",
                     "name": "Linux-Desktop-NSG",
+                    "protocol": "*",
+                    "destinationPortRange": "22",
+                    "sourceAddressPrefix": "*",
+                    "direction": "Inbound"
+                },
+                {
+                    "resourceGroup":"iac-uks-network-poc-rg",
+                    "name": "Batch-NSG",
                     "protocol": "*",
                     "destinationPortRange": "22",
                     "sourceAddressPrefix": "*",
