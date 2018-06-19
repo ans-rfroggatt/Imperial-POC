@@ -20,7 +20,7 @@
         "type": "array",
         "defaultValue": [
           { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24"},
-          { "name": "Management", "addressPrefix": "10.0.1.0/24", "networkSecurityGroup": "Management"}
+          { "name": "Management", "addressPrefix": "10.0.1.0/24"}
           ],
         "metadata": {
           "description": "Array of the subnets. Must include GatewaySubnet if a VPN gateway is being created."
@@ -68,8 +68,7 @@
             "input": {
               "name": "[parameters('subnets')[copyIndex('subnets')].name]",
               "properties": {
-                "addressPrefix": "[parameters('subnets')[copyIndex('subnets')].addressPrefix]",
-                "networkSecurityGroup": "[parameters('subnets')[copyIndex('subnets')].networkSecurityGroup]"
+                "addressPrefix": "[parameters('subnets')[copyIndex('subnets')].addressPrefix]"
               }
             }
           }]

@@ -78,13 +78,7 @@
             "type": "array",
             "defaultValue": [
                 {
-                    "name": "Management-NSG",
-                    "protocol": "*",
-                    "destinationPortRange": "3389",
-                    "sourceAddressPrefix": "*",
-                    "direction": "Inbound"
-                },
-                {
+                    "resourceGroup":"iac-uks-network-poc-rg",
                     "name": "Windows-Desktop-NSG",
                     "protocol": "*",
                     "destinationPortRange": "3389",
@@ -92,6 +86,7 @@
                     "direction": "Inbound"
                 },
                 {
+                    "resourceGroup":"iac-uks-network-poc-rg",
                     "name": "Linux-Desktop-NSG",
                     "protocol": "*",
                     "destinationPortRange": "22",
@@ -175,7 +170,7 @@
             "name": "deployNsg",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "resourceGroup": "[parameters('spokes')[copyIndex()].resourceGroup]",
+            "resourceGroup": "[parameters('securitygroups')[copyIndex()].resourceGroup]",
             "dependsOn": [
                 "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]",
                 "[concat('deploySpoke', copyIndex(1), '-', parameters('spokes')[copyIndex()].vnet.name)]"

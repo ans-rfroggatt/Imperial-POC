@@ -68,13 +68,7 @@
         "securitygroups": {
             "value": [
                 {
-                    "name": "Management-NSG",
-                    "protocol": "*",
-                    "destinationPortRange": "3389",
-                    "sourceAddressPrefix": "*",
-                    "direction": "Inbound"
-                },
-                {
+                    "resourceGroup":"iac-uks-network-poc-rg",
                     "name": "Windows-Desktop-NSG",
                     "protocol": "*",
                     "destinationPortRange": "3389",
@@ -82,6 +76,7 @@
                     "direction": "Inbound"
                 },
                 {
+                    "resourceGroup":"iac-uks-network-poc-rg",
                     "name": "Linux-Desktop-NSG",
                     "protocol": "*",
                     "destinationPortRange": "22",
