@@ -66,8 +66,7 @@
             ]
         },
         "securitygroups": {
-            "type": "array",
-            "defaultValue": [
+            "value": [
                 {
                     "name": "Management-NSG",
                     "protocol": "*",
