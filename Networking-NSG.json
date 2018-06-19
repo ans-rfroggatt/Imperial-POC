@@ -38,7 +38,16 @@
             "location": "[resourceGroup().location]",
             "copy": {
                 "name": "nsgloop",
-                "count": "[length(parameters('securitygroups'))]"
+                "count": "[length(parameters('securitygroups'))]",
+                "input": {
+                    "name": "[parameters('securitygroups')[copyIndex('securitygroups')].name]",
+                    "properties": {
+                      "protocol": "[parameters('securitygroups')[copyIndex('securitygroups')].protocol]",
+                      "destinationPortRange": "[parameters('securitygroups')[copyIndex('subnets')].destinationPortRange]",
+                      "sourceAddressPrefix": "[parameters('securitygroups')[copyIndex('subnets')].sourceAddressPrefix]",
+                      "direction": "[parameters('securitygroups')[copyIndex('securitygroups')].direction]"
+                    }
+                  }
             },
             "properties": {
                 "securityRules": [
