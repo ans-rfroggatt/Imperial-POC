@@ -32,7 +32,7 @@
     "variables": {},
     "resources": [
         {
-            "name": "[parameters('securitygroups')[copyIndex('securitygroups')].name]",
+            "name": "[parameters('securitygroups')[copyIndex('nsgloop')].name]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2017-10-01",
             "location": "[resourceGroup().location]",
