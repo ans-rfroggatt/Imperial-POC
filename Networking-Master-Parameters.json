@@ -1,14 +1,27 @@
- {
+{
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "hub": {
             "value": {
                 "resourceGroup": "iac-uks-network-poc-rg",
-                "vnet": { "name": "Hub-VN", "addressPrefixes": [ "10.0.0.0/16" ] },
+                "vnet": {
+                    "name": "Hub-VN",
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
                 "subnets": [
-                    { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24", "networkSecurityGroup": "" },
-                    { "name": "Management", "addressPrefix": "10.0.1.0/24","networkSecurityGroup": "Management-NSG" }
+                    {
+                        "name": "GatewaySubnet",
+                        "addressPrefix": "10.0.0.0/24",
+                        "networkSecurityGroup": ""
+                    },
+                    {
+                        "name": "Management",
+                        "addressPrefix": "10.0.1.0/24",
+                        "networkSecurityGroup": "Management-NSG"
+                    }
                 ],
                 "createGateway": false,
                 "gatewaySku": "Basic"
@@ -18,38 +31,63 @@
             "value": [
                 {
                     "resourceGroup": "iac-uks-network-poc-rg",
-                    "vnet": { "name": "Workspace-VN", "addressPrefixes": [ "10.1.0.0/16"  ] },
+                    "vnet": {
+                        "name": "Workspace-VN",
+                        "addressPrefixes": [
+                            "10.1.0.0/16"
+                        ]
+                    },
                     "subnets": [
-                        { "name": "Windows", "addressPrefix": "10.1.0.0/24" },
-                        { "name": "Linux", "addressPrefix": "10.1.1.0/24" }
+                        {
+                            "name": "Windows",
+                            "addressPrefix": "10.1.0.0/24"
+                        },
+                        {
+                            "name": "Linux",
+                            "addressPrefix": "10.1.1.0/24"
+                        }
                     ]
                 },
                 {
                     "resourceGroup": "iac-uks-network-poc-rg",
-                    "vnet": { "name": "Batch-VN", "addressPrefixes": [ "10.2.0.0/16" ] },
+                    "vnet": {
+                        "name": "Batch-VN",
+                        "addressPrefixes": [
+                            "10.2.0.0/16"
+                        ]
+                    },
                     "subnets": [
-                        { "name": "Batch-Compute", "addressPrefix": "10.2.0.0/24" }
+                        {
+                            "name": "Batch-Compute",
+                            "addressPrefix": "10.2.0.0/24"
+                        }
                     ]
                 }
             ]
         },
         "securitygroups": {
-            "value": [
+            "type": "array",
+            "defaultValue": [
                 {
-                    "resourceGroup": "",
-                    "onPremPip": "*",
-                    "managementNsg": {
-                        "name": "Management-NSG",
-                        "subnets": ["Management"]
-                    },
-                    "windowsNsg": {
-                        "name": "Windows-Desktop-NSG",
-                        "subnets": ["Windows"]
-                    },
-                    "linuxNsg": {
-                        "name": "Linux-Desktop-NSG",
-                        "subnets": ["Linux"]
-                    }
+                    "name": "Management-NSG",
+                    "protocol": "*",
+                    "destinationPortRange": "3389",
+                    "sourceAddressPrefix": "*",
+                    "direction": "Inbound"
+                },
+                {
+                    "name": "Windows-Desktop-NSG",
+                    "protocol": "*",
+                    "destinationPortRange": "3389",
+                    "sourceAddressPrefix": "*",
+                    "direction": "Inbound"
+                },
+                {
+                    "name": "Linux-Desktop-NSG",
+                    "protocol": "*",
+                    "destinationPortRange": "22",
+                    "sourceAddressPrefix": "*",
+                    "direction": "Inbound"
                 }
             ]
         }

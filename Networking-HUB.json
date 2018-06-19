@@ -19,7 +19,7 @@
       "subnets": {
         "type": "array",
         "defaultValue": [
-          { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24", "networkSecurityGroup": "Management"},
+          { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24"},
           { "name": "Management", "addressPrefix": "10.0.1.0/24", "networkSecurityGroup": "Management"}
           ],
         "metadata": {

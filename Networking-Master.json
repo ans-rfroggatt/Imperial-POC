@@ -15,8 +15,7 @@
                 "subnets": [
                     {
                         "name": "GatewaySubnet",
-                        "addressPrefix": "10.0.0.0/24",
-                        "networkSecurityGroup": ""
+                        "addressPrefix": "10.0.0.0/24"
                     },
                     {
                         "name": "Management",
@@ -76,23 +75,28 @@
             }
         },
         "securitygroups": {
-            "type": "object",
+            "type": "array",
             "defaultValue": [
                 {
-                    "resourceGroup": "",
-                    "onPremPip": "*",
-                    "managementNsg": {
-                        "name": "Management-NSG",
-                        "subnets": ["Management"]
-                    },
-                    "windowsNsg": {
-                        "name": "Windows-Desktop-NSG",
-                        "subnets": ["Windows"]
-                    },
-                    "linuxNsg": {
-                        "name": "Linux-Desktop-NSG",
-                        "subnets": ["Linux"]
-                    }
+                    "name": "Management-NSG",
+                    "protocol": "*",
+                    "destinationPortRange": "3389",
+                    "sourceAddressPrefix": "*",
+                    "direction": "Inbound"
+                },
+                {
+                    "name": "Windows-Desktop-NSG",
+                    "protocol": "*",
+                    "destinationPortRange": "3389",
+                    "sourceAddressPrefix": "*",
+                    "direction": "Inbound"
+                },
+                {
+                    "name": "Linux-Desktop-NSG",
+                    "protocol": "*",
+                    "destinationPortRange": "22",
+                    "sourceAddressPrefix": "*",
+                    "direction": "Inbound"
                 }
             ]
         }
@@ -179,17 +183,8 @@
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "onPremPip": {
-                        "value": "[parameters('securitygroups').onPremPip]"
-                    },
-                    "managementNsgName": {
-                        "value": "[parameters('securitygroups').managementNsg.name]"
-                    },
-                    "windowsNsgName": {
-                        "value": "[parameters('securitygroups').windowsNsg.name]"
-                    },
-                    "linuxNsgName": {
-                        "value": "[parameters('securitygroups').linuxNsg.name]"
+                    "securitygroups": {
+                        "value": "[parameters('securitygroups')]"
                     }
                 },
                 "templateLink": {
