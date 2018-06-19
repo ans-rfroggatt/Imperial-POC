@@ -7,8 +7,8 @@
                 "resourceGroup": "iac-uks-network-poc-rg",
                 "vnet": { "name": "Hub-VN", "addressPrefixes": [ "10.0.0.0/16" ] },
                 "subnets": [
-                    { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24" },
-                    { "name": "Management", "addressPrefix": "10.0.1.0/24" }
+                    { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24", "networkSecurityGroup": "" },
+                    { "name": "Management", "addressPrefix": "10.0.1.0/24","networkSecurityGroup": "Management-NSG" }
                 ],
                 "createGateway": false,
                 "gatewaySku": "Basic"
@@ -30,6 +30,26 @@
                     "subnets": [
                         { "name": "Batch-Compute", "addressPrefix": "10.2.0.0/24" }
                     ]
+                }
+            ]
+        },
+        "securitygroups": {
+            "value": [
+                {
+                    "resourceGroup": "",
+                    "onPremPip": "*",
+                    "managementNsg": {
+                        "name": "Management-NSG",
+                        "subnets": ["Management"]
+                    },
+                    "windowsNsg": {
+                        "name": "Windows-Desktop-NSG",
+                        "subnets": ["Windows"]
+                    },
+                    "linuxNsg": {
+                        "name": "Linux-Desktop-NSG",
+                        "subnets": ["Linux"]
+                    }
                 }
             ]
         }

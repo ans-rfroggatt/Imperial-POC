@@ -6,15 +6,28 @@
             "type": "object",
             "defaultValue": {
                 "resourceGroup": "iac-uks-network-poc-rg",
-                "vnet": { "name": "Hub-VN", "addressPrefixes": [ "10.0.0.0/16" ] },
+                "vnet": {
+                    "name": "Hub-VN",
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
                 "subnets": [
-                    { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24" },
-                    { "name": "Management", "addressPrefix": "10.0.1.0/24" }
+                    {
+                        "name": "GatewaySubnet",
+                        "addressPrefix": "10.0.0.0/24",
+                        "networkSecurityGroup": ""
+                    },
+                    {
+                        "name": "Management",
+                        "addressPrefix": "10.0.1.0/24",
+                        "networkSecurityGroup": "Management-NSG"
+                    }
                 ],
                 "createGateway": false,
                 "gatewaySku": "Basic"
             },
-            "metadata": { 
+            "metadata": {
                 "description": "Hub object.  See defaultValue for example. The gatewaySku string is any of Basic|VpnGw1|VpnGw2|VpnGw3"
             }
         },
@@ -23,99 +36,173 @@
             "defaultValue": [
                 {
                     "resourceGroup": "iac-uks-network-poc-rg",
-                    "vnet": { "name": "Workspace-VN", "addressPrefixes": [ "10.1.0.0/16"  ] },
+                    "vnet": {
+                        "name": "Workspace-VN",
+                        "addressPrefixes": [
+                            "10.1.0.0/16"
+                        ]
+                    },
                     "subnets": [
-                        { "name": "Windows", "addressPrefix": "10.1.0.0/24" },
-                        { "name": "Linux", "addressPrefix": "10.1.1.0/24" }
+                        {
+                            "name": "Windows",
+                            "addressPrefix": "10.1.0.0/24",
+                            "networkSecurityGroup": "Windows-Desktop-NSG"
+                        },
+                        {
+                            "name": "Linux",
+                            "addressPrefix": "10.1.1.0/24",
+                            "networkSecurityGroup": "Linux-Desktop-NSG"
+                        }
                     ]
                 },
                 {
                     "resourceGroup": "iac-uks-network-poc-rg",
-                    "vnet": { "name": "Batch-VN", "addressPrefixes": [ "10.2.0.0/16" ] },
+                    "vnet": {
+                        "name": "Batch-VN",
+                        "addressPrefixes": [
+                            "10.2.0.0/16"
+                        ]
+                    },
                     "subnets": [
-                        { "name": "BatchCompute", "addressPrefix": "10.2.0.0/24" }
+                        {
+                            "name": "BatchCompute",
+                            "addressPrefix": "10.2.0.0/24"
+                        }
                     ]
                 }
             ],
             "metadata": {
                 "description": "Array of spoke objects. See defaultValue for example."
             }
+        },
+        "securitygroups": {
+            "type": "object",
+            "defaultValue": [
+                {
+                    "resourceGroup": "",
+                    "onPremPip": "*",
+                    "managementNsg": {
+                        "name": "Management-NSG",
+                        "subnets": ["Management"]
+                    },
+                    "windowsNsg": {
+                        "name": "Windows-Desktop-NSG",
+                        "subnets": ["Windows"]
+                    },
+                    "linuxNsg": {
+                        "name": "Linux-Desktop-NSG",
+                        "subnets": ["Linux"]
+                    }
+                }
+            ]
         }
     },
     "variables": {
-      "hubUrl": "[uri(deployment().properties.templateLink.uri, 'Networking-HUB.json')]",
-      "spokeUrl": "[uri(deployment().properties.templateLink.uri, 'Networking-Spokes.json')]",
-      "hubDeploymentName": "[concat('deployHub-', parameters('hub').vnet.name)]"
+        "hubUrl": "[uri(deployment().properties.templateLink.uri, 'Networking-HUB.json')]",
+        "spokeUrl": "[uri(deployment().properties.templateLink.uri, 'Networking-Spokes.json')]",
+        "nsgUrl": "[uri(deployment().properties.templateLink.uri, 'Networking-NSG.json')]",
+        "hubDeploymentName": "[concat('deployHub-', parameters('hub').vnet.name)]"
     },
     "resources": [
-      {
-        "name": "[variables('hubDeploymentName')]",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2017-05-10",
-        "resourceGroup": "[parameters('hub').resourceGroup]",
-        "properties": {
-          "mode": "Incremental",
-          "parameters": {
-            "vnetName": {
-                "value": "[parameters('hub').vnet.name]"
-            },
-            "vNetAddressPrefixes": {
-                "value": "[parameters('hub').vnet.addressPrefixes]"
-            },
-            "subnets": {
-                "value": "[parameters('hub').subnets]"
-            },
-            "createGateway": {
-                "value": "[parameters('hub').createGateway]"
-            },
-            "gatewaySku": {
-                "value": "[parameters('hub').gatewaySku]"
+        {
+            "name": "[variables('hubDeploymentName')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[parameters('hub').resourceGroup]",
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "vnetName": {
+                        "value": "[parameters('hub').vnet.name]"
+                    },
+                    "vNetAddressPrefixes": {
+                        "value": "[parameters('hub').vnet.addressPrefixes]"
+                    },
+                    "subnets": {
+                        "value": "[parameters('hub').subnets]"
+                    },
+                    "createGateway": {
+                        "value": "[parameters('hub').createGateway]"
+                    },
+                    "gatewaySku": {
+                        "value": "[parameters('hub').gatewaySku]"
+                    }
+                },
+                "templateLink": {
+                    "uri": "[variables('hubUrl')]",
+                    "contentVersion": "1.0.0.0"
+                }
             }
-          },
-          "templateLink": {
-            "uri": "[variables('hubUrl')]",
-            "contentVersion": "1.0.0.0"
-          }
-        }
-      },
-      {
-          "name": "[concat('deploySpoke', copyIndex(1), '-', parameters('spokes')[copyIndex()].vnet.name)]",
-          "type": "Microsoft.Resources/deployments",
-          "apiVersion": "2017-05-10",
-          "resourceGroup": "[parameters('spokes')[copyIndex()].resourceGroup]",
-          "dependsOn": [
-              "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]"
-          ],
-          "copy": {
-              "name": "spokecopy",
-              "count": "[length(parameters('spokes'))]",
-              "mode": "Serial",
-              "batchSize": 1
-          },
-          "properties": {
-            "mode": "Incremental",
-            "parameters": {
-              "peer": {
-                  "value": true
-              },
-              "hub": {
-                  "value": "[parameters('hub')]"
-              },
-              "spoke": {
-                  "value": "[parameters('spokes')[copyIndex()]]"
-              }
+        },
+        {
+            "name": "[concat('deploySpoke', copyIndex(1), '-', parameters('spokes')[copyIndex()].vnet.name)]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[parameters('spokes')[copyIndex()].resourceGroup]",
+            "dependsOn": [
+                "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]"
+            ],
+            "copy": {
+                "name": "spokecopy",
+                "count": "[length(parameters('spokes'))]",
+                "mode": "Serial",
+                "batchSize": 1
             },
-            "templateLink": {
-              "uri": "[variables('spokeUrl')]",
-              "contentVersion": "1.0.0.0"
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "peer": {
+                        "value": true
+                    },
+                    "hub": {
+                        "value": "[parameters('hub')]"
+                    },
+                    "spoke": {
+                        "value": "[parameters('spokes')[copyIndex()]]"
+                    }
+                },
+                "templateLink": {
+                    "uri": "[variables('spokeUrl')]",
+                    "contentVersion": "1.0.0.0"
+                }
             }
-          }
+        },
+        {
+            "name": "deployNsg",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[parameters('spokes')[copyIndex()].resourceGroup]",
+            "dependsOn": [
+                "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]",
+                "[concat('deploySpoke', copyIndex(1), '-', parameters('spokes')[copyIndex()].vnet.name)]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "onPremPip": {
+                        "value": "[parameters('securitygroups').onPremPip]"
+                    },
+                    "managementNsgName": {
+                        "value": "[parameters('securitygroups').managementNsg.name]"
+                    },
+                    "windowsNsgName": {
+                        "value": "[parameters('securitygroups').windowsNsg.name]"
+                    },
+                    "linuxNsgName": {
+                        "value": "[parameters('securitygroups').linuxNsg.name]"
+                    }
+                },
+                "templateLink": {
+                    "uri": "[variables('nsgUrl')]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
         }
     ],
     "outputs": {
-      "vpnGatewayPipId": {
-          "type": "string",
-          "value": "[reference(variables('hubDeploymentName')).outputs.gatewayPipId.value]"
-      }
+        "vpnGatewayPipId": {
+            "type": "string",
+            "value": "[reference(variables('hubDeploymentName')).outputs.gatewayPipId.value]"
+        }
     }
-  }
+}

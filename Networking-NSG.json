@@ -1,0 +1,98 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "onPremPip": {
+            "type": "string",
+            "defaultValue": "*"
+        },
+        "managementNsgName": {
+            "type": "string",
+            "defaultValue": "Management-NSG"
+        },
+        "windowsNsgName": {
+            "type": "string",
+            "defaultValue": "Windows-Desktop-NSG"
+        },
+        "linuxNsgName": {
+            "type": "string",
+            "defaultValue": "Linux-Desktop-NSG"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('managementNsgName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2017-10-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "[concat(parameters('managementNsgName'), '-RDP_Allow')]",
+                        "properties": {
+                            "description": "Allows RDP from on-premise Network",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3389",
+                            "sourceAddressPrefix": "[parameters('onPremPip')]",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": "100",
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[parameters('windowsNsgName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2017-10-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "[concat(parameters('windowsNsgName'), '-RDP_Allow')]",
+                        "properties": {
+                            "description": "Allows RDP from on-premise Network",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3389",
+                            "sourceAddressPrefix": "[parameters('onPremPip')]",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": "100",
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[parameters('linuxNsgName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2017-10-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "[concat(parameters('linuxNsgName'), '-SSH_Allow')]",
+                        "properties": {
+                            "description": "Allows SSH from on-premise Network",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "[parameters('onPremPip')]",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": "100",
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {}
+}

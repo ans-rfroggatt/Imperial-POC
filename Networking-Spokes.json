@@ -27,8 +27,8 @@
             "addressPrefixes": [ "10.99.0.0/16" ]
           },
           "subnets": [
-            { "name": "subnet1", "addressPrefix": "10.99.0.0/24" },
-            { "name": "subnet2", "addressPrefix": "10.99.1.0/24" }
+            { "name": "Windows", "addressPrefix": "10.99.0.0/24", "networkSecurityGroup": "Windows-Desktop-NSG"},
+            { "name": "Linux", "addressPrefix": "10.99.1.0/24",  "networkSecurityGroup": "Linux-Desktop-NSG"}
           ]
         },
         "metadata": {
@@ -67,7 +67,8 @@
             "input": {
               "name": "[parameters('spoke').subnets[copyIndex('subnets')].name]",
               "properties": {
-                "addressPrefix": "[parameters('spoke').subnets[copyIndex('subnets')].addressPrefix]"
+                "addressPrefix": "[parameters('spoke').subnets[copyIndex('subnets')].addressPrefix]",
+                "networkSecurityGroup": "[parameters('spoke').subnets[copyIndex('subnets')].networkSecurityGroup]"
               }
             }
           }]
