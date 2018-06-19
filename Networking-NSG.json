@@ -2,57 +2,60 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "securitygroups": {
-            "type": "array",
-            "defaultValue": [
-                {
-                    "name": "Windows-Desktop-NSG",
-                    "protocol": "*",
-                    "destinationPortRange": "3389",
-                    "sourceAddressPrefix": "*",
-                    "direction": "Inbound"
-                },
-                {
-                    "name": "Linux-Desktop-NSG",
-                    "protocol": "*",
-                    "destinationPortRange": "22",
-                    "sourceAddressPrefix": "*",
-                    "direction": "Inbound"
-                },
-                {
-                    "name": "Batch-NSG",
-                    "protocol": "*",
-                    "destinationPortRange": "22",
-                    "sourceAddressPrefix": "*",
-                    "direction": "Inbound"
-                }
-            ]
+        "nsg": {
+            "type": "object",
+            "defaultValue": {
+                "resourcegroup": "iac-uks-network-poc-rg",
+                "securitygroups": [
+                    {
+                        "name": "Windows-Desktop-NSG",
+                        "protocol": "*",
+                        "destinationPortRange": "3389",
+                        "sourceAddressPrefix": "*",
+                        "direction": "Inbound"
+                    },
+                    {
+                        "name": "Linux-Desktop-NSG",
+                        "protocol": "*",
+                        "destinationPortRange": "22",
+                        "sourceAddressPrefix": "*",
+                        "direction": "Inbound"
+                    },
+                    {
+                        "name": "Batch-NSG",
+                        "protocol": "*",
+                        "destinationPortRange": "22",
+                        "sourceAddressPrefix": "*",
+                        "direction": "Inbound"
+                    }
+                ]
+            }
         }
     },
     "variables": {},
     "resources": [
         {
-            "name": "[parameters('securitygroups').name[copyIndex()]]",
+            "name": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].name]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2017-10-01",
             "location": "[resourceGroup().location]",
             "copy": {
                 "name": "nsgloop",
-                "count": "[length(parameters('securitygroups'))]"
+                "count": "[length(parameters('nsg').securitygroups)]"
             },
             "properties": {
                 "securityRules": [
                     {
-                        "name": "[concat(parameters('securitygroups').name, '-rule', copyIndex(1))]",
+                        "name": "[concat(parameters('nsg').securitygroups.name, '-rule', copyIndex(1))]",
                         "properties": {
                             "protocol": "*",
                             "sourcePortRange": "*",
-                            "destinationPortRange": "[parameters('securitygroups').destinationPortRange]",
-                            "sourceAddressPrefix": "[parameters('securitygroups').sourceAddressPrefix]",
+                            "destinationPortRange": "[parameters('nsg').securitygroups.destinationPortRange]",
+                            "sourceAddressPrefix": "[parameters('nsg').securitygroups.sourceAddressPrefix]",
                             "destinationAddressPrefix": "VirtualNetwork",
                             "access": "Allow",
                             "priority": "100",
-                            "direction": "[parameters('securitygroups').direction]"
+                            "direction": "[parameters('nsg').securitygroups.direction]"
                         }
                     }
                 ]
