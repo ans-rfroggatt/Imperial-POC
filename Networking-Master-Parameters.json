@@ -63,33 +63,28 @@
                 }
             ]
         },
-        "securitygroups": {
-            "value": [
-                {
-                    "resourceGroup":"iac-uks-network-poc-rg",
-                    "name": "Windows-Desktop-NSG",
-                    "protocol": "*",
-                    "destinationPortRange": "3389",
-                    "sourceAddressPrefix": "*",
-                    "direction": "Inbound"
-                },
-                {
-                    "resourceGroup":"iac-uks-network-poc-rg",
-                    "name": "Linux-Desktop-NSG",
-                    "protocol": "*",
-                    "destinationPortRange": "22",
-                    "sourceAddressPrefix": "*",
-                    "direction": "Inbound"
-                },
-                {
-                    "resourceGroup":"iac-uks-network-poc-rg",
-                    "name": "Batch-NSG",
-                    "protocol": "*",
-                    "destinationPortRange": "22",
-                    "sourceAddressPrefix": "*",
-                    "direction": "Inbound"
-                }
-            ]
+        "nsg": {
+            "defaultValue": {
+                "resourceGroup": "iac-uks-network-poc-rg",
+                "securityGroups": [
+                    {
+                        "resourceGroup": "iac-uks-network-poc-rg",
+                        "name": "Windows-Desktop-NSG",
+                        "protocol": "*",
+                        "destinationPortRange": "3389",
+                        "sourceAddressPrefix": "*",
+                        "direction": "Inbound"
+                    },
+                    {
+                        "resourceGroup": "iac-uks-network-poc-rg",
+                        "name": "Linux-Desktop-NSG",
+                        "protocol": "*",
+                        "destinationPortRange": "22",
+                        "sourceAddressPrefix": "*",
+                        "direction": "Inbound"
+                    }
+                ]
+            }
         }
     }
 }

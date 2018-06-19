@@ -74,26 +74,29 @@
                 "description": "Array of spoke objects. See defaultValue for example."
             }
         },
-        "securitygroups": {
-            "type": "array",
-            "defaultValue": [
-                {
-                    "resourceGroup":"iac-uks-network-poc-rg",
-                    "name": "Windows-Desktop-NSG",
-                    "protocol": "*",
-                    "destinationPortRange": "3389",
-                    "sourceAddressPrefix": "*",
-                    "direction": "Inbound"
-                },
-                {
-                    "resourceGroup":"iac-uks-network-poc-rg",
-                    "name": "Linux-Desktop-NSG",
-                    "protocol": "*",
-                    "destinationPortRange": "22",
-                    "sourceAddressPrefix": "*",
-                    "direction": "Inbound"
-                }
-            ]
+        "nsg": {
+            "type": "object",
+            "defaultValue": {
+                "resourceGroup": "iac-uks-network-poc-rg",
+                "securityGroups": [
+                    {
+                        "resourceGroup": "iac-uks-network-poc-rg",
+                        "name": "Windows-Desktop-NSG",
+                        "protocol": "*",
+                        "destinationPortRange": "3389",
+                        "sourceAddressPrefix": "*",
+                        "direction": "Inbound"
+                    },
+                    {
+                        "resourceGroup": "iac-uks-network-poc-rg",
+                        "name": "Linux-Desktop-NSG",
+                        "protocol": "*",
+                        "destinationPortRange": "22",
+                        "sourceAddressPrefix": "*",
+                        "direction": "Inbound"
+                    }
+                ]
+            }
         }
     },
     "variables": {
@@ -170,12 +173,12 @@
             "name": "deployNsg",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "resourceGroup": "[parameters('securitygroups').resourceGroup]",
+            "resourceGroup": "[parameters('nsg').resourceGroup]",
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
                     "securitygroups": {
-                        "value": "[parameters('securitygroups')]"
+                        "value": "[parameters('nsg').securitygroups]"
                     }
                 },
                 "templateLink": {
