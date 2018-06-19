@@ -48,7 +48,7 @@
                             "protocol": "*",
                             "sourcePortRange": "*",
                             "destinationPortRange": "[parameters('securitygroups').destinationPortRange]",
-                            "sourceAddressPrefix": "[parameters('onPremPip')]",
+                            "sourceAddressPrefix": "[parameters('securitygroups').sourceAddressPrefix]",
                             "destinationAddressPrefix": "VirtualNetwork",
                             "access": "Allow",
                             "priority": "100",
