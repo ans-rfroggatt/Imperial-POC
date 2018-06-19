@@ -5,8 +5,8 @@
         "hub": {
             "type": "object",
             "defaultValue": {
-                "resourceGroup": "iac-uks-network-prod-rg",
-                "vnet": { "name": "Hub-vNet", "addressPrefixes": [ "10.0.0.0/16" ] },
+                "resourceGroup": "iac-uks-network-poc-rg",
+                "vnet": { "name": "Hub-VN", "addressPrefixes": [ "10.0.0.0/16" ] },
                 "subnets": [
                     { "name": "GatewaySubnet", "addressPrefix": "10.0.0.0/24" },
                     { "name": "Management", "addressPrefix": "10.0.1.0/24" }
@@ -22,16 +22,16 @@
             "type": "array",
             "defaultValue": [
                 {
-                    "resourceGroup": "iac-uks-network-prod-rg",
-                    "vnet": { "name": "Workspace-vNet", "addressPrefixes": [ "10.1.0.0/16"  ] },
+                    "resourceGroup": "iac-uks-network-poc-rg",
+                    "vnet": { "name": "Workspace-VN", "addressPrefixes": [ "10.1.0.0/16"  ] },
                     "subnets": [
                         { "name": "Windows", "addressPrefix": "10.1.0.0/24" },
                         { "name": "Linux", "addressPrefix": "10.1.1.0/24" }
                     ]
                 },
                 {
-                    "resourceGroup": "iac-uks-network-prod-rg",
-                    "vnet": { "name": "Batch-vNet", "addressPrefixes": [ "10.2.0.0/16" ] },
+                    "resourceGroup": "iac-uks-network-poc-rg",
+                    "vnet": { "name": "Batch-VN", "addressPrefixes": [ "10.2.0.0/16" ] },
                     "subnets": [
                         { "name": "BatchCompute", "addressPrefix": "10.2.0.0/24" }
                     ]
