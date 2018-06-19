@@ -149,10 +149,6 @@
     "spokeID": {
       "type": "string",
       "value": "[variables('spokeID')]"
-    },
-    "subnets": {
-      "type": "array",
-      "value": "[variables('subnets')]"
     }
   }
 }
