@@ -170,11 +170,7 @@
             "name": "deployNsg",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "resourceGroup": "[parameters('securitygroups')[copyIndex()].resourceGroup]",
-            "dependsOn": [
-                "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]",
-                "[concat('deploySpoke', copyIndex(1), '-', parameters('spokes')[copyIndex()].vnet.name)]"
-            ],
+            "resourceGroup": "[parameters('securitygroups').resourceGroup]",
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
