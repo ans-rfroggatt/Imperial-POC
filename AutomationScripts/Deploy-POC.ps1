@@ -48,9 +48,13 @@ New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-automation-poc-rg 
 
 
 # Trigger Azure Automation Runbook to Deploy Test Windows Desktop
-$params = @{"password"="Password123!!"; "vmsize"="Standard_A1"; "os"="Windows"}
+$params = @{"password"="Password123!!"; "vmsize"="Standard_A1"; "os"="Windows"; "expiration"="21 June 2018 13:00:00"}
 Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-deployment -ResourceGroupName iac-uks-automation-poc-rg –Parameters $params
 
 # Trigger Azure Automation Runbook to Deploy Test Linux Desktop
-$params = @{"password"="Password123!!!"; "vmsize"="Standard_A1"; "os"="Linux"}
+$params = @{"password"="Password123!!!"; "vmsize"="Standard_A1"; "os"="Linux"; "expiration"="21 June 2018 13:00:00"}
 Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-deployment -ResourceGroupName iac-uks-automation-poc-rg –Parameters $params
+
+# Trigger Azure Automation Runbook to Clean Up Desktops
+$params = @{"password"="Password123!!!"; "vmsize"="Standard_A1"; "os"="Linux"}
+Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-cleanup -ResourceGroupName iac-uks-automation-poc-rg –Parameters $params
