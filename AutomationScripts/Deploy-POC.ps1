@@ -34,17 +34,17 @@ $Location = Read-Host "Enter the location to deploy the POC"
 # Create Required Resource Groups
 New-AzureRmResourceGroup -Name iac-uks-network-poc-rg -Location "West Europe"
 New-AzureRmResourceGroup -Name iac-uks-desktop-poc-rg -Location "West Europe"
-New-AzureRmResourceGroup -Name iac-uks-function-poc-rg -Location "West Europe"
+New-AzureRmResourceGroup -Name iac-uks-automation-poc-rg -Location "West Europe"
 
 
 # Deploy Core Networking Resources
-New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-network-poc-rg -TemplateUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Networking-Master.json `
--TemplateParameterUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Networking-Master-Parameters.json
+New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-network-poc-rg -TemplateUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Networking/Networking-Master.json `
+-TemplateParameterUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Networking/Networking-Master-Parameters.json
 
 
-# Deploy Azure Function App
+# Deploy Infrastructure Automation Resources
 ##New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-function-poc-rg -TemplateUri
 
 
 # Trigger Azure Function to Deploy Test Desktop
-##.\Deploy-Windows-VM.ps1
+##.\Deploy-VM.ps1

@@ -1,0 +1,112 @@
+{
+    "$schema": "http://schemas.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "automationAccountName": {
+            "type": "string",
+            "defaultValue": "iac-uks-desktop-automation"
+        },
+        "deploymentScriptUri": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/AutomationScripts/Deploy-VM.ps1"
+        },
+        "cleanUpScriptUri": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/AutomationScripts/Cleanup-VM.ps1"
+        }
+    },
+    "variables": {
+        "jobScheduleGuid": "[guid(resourceGroup().id)]",
+        "cleanUpScheduleName": "[concat(parameters('automationAccountName'), '-cleanup-schedule']",
+        "cleanUpRunbookName": "[concat(parameters('automationAccountName'), '-cleanup']",
+        "deploymentRunbookName": "[concat(parameters('automationAccountName'), '-deployment']"
+    },
+    "resources": [
+        {
+            "name": "[parameters('automationAccountName')]",
+            "type": "Microsoft.Automation/automationAccounts",
+            "apiVersion": "2015-10-31",
+            "properties": {
+                "sku": {
+                    "name": "Basic"
+                }
+            },
+            "location": "[resourceGroup().location]",
+            "resources": [
+                {
+                    "name": "[variables('cleanUpScheduleName')]",
+                    "type": "schedules",
+                    "dependsOn": [
+                        "[parameters('automationAccountName')]"
+                    ],
+                    "apiVersion": "2015-10-31",
+                    "properties": {
+                        "description": "Hourly schedule for Desktop Cleanup Runbook",
+                        "startTime": "2018-06-21T00:00:00-06:00",
+                        "frequency": "Hour",
+                        "interval": 1
+                    }
+                },
+                {
+                    "name": "[variables('jobScheduleGuid')]",
+                    "type": "jobSchedules",
+                    "dependsOn": [
+                        "[parameters('automationAccountName')]",
+                        "iac-uks-desktop-cleanup",
+                        "iac-uks-desktop-cleanup-schedule"
+                    ],
+                    "apiVersion": "2015-10-31",
+                    "properties": {
+                        "schedule": {
+                            "name": "iac-uks-desktop-cleanup-schedule"
+                        },
+                        "runbook": {
+                            "name": "iac-uks-desktop-cleanup"
+                        },
+                        "parameters": {
+                            "ResourceGroupName": "iac-uks-desktop-poc-rg"
+                        }
+                    }
+                },
+                {
+                    "name": "[variables('cleanUpRunbookName')]",
+                    "type": "runbooks",
+                    "dependsOn": [
+                        "[parameters('automationAccountName')]"
+                    ],
+                    "apiVersion": "2015-10-31",
+                    "properties": {
+                        "logVerbose": false,
+                        "logProgress": true,
+                        "runbookType": "PowerShell",
+                        "publishContentLink": {
+                            "uri": "[parameters('cleanUpScriptUri')]",
+                            "version": "1.0.0"
+                        },
+                        "description": "Deletes Desktops with an expired Expiration Date/Time tag"
+                    },
+                    "location": "[resourceGroup().location]"
+                },
+                {
+                    "name": "[variables('deploymentRunbookName')]",
+                    "type": "runbooks",
+                    "dependsOn": [
+                        "[parameters('automationAccountName')]"
+                    ],
+                    "apiVersion": "2015-10-31",
+                    "properties": {
+                        "logVerbose": false,
+                        "logProgress": true,
+                        "runbookType": "PowerShell",
+                        "publishContentLink": {
+                            "uri": "[parameters('deploymentScriptUri')]",
+                            "version": "1.0.0"
+                        },
+                        "description": "Provisions Windows or Linux Desktop on Demand"
+                    },
+                    "location": "[resourceGroup().location]"
+                }
+            ]
+        }
+    ]
+}
