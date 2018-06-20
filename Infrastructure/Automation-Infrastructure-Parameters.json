@@ -6,10 +6,10 @@
             "value": "iac-uks-desktop-automation"
         },
         "deploymentScriptUri": {
-            "value": "https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/AutomationScripts/Deploy-VM.ps1"
+            "value": "https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/AutomationScripts/Deploy-Desktops.ps1"
         },
         "cleanUpScriptUri": {
-            "value": "https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/AutomationScripts/Cleanup-VM.ps1"
+            "value": "https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/AutomationScripts/CleanUp-Desktops.ps1"
         }
     }
 }
