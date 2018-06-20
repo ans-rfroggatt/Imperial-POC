@@ -1,6 +1,6 @@
 ﻿##
 
-$rgName = 'Nano'
+$rgName = 'iac-uks-desktop-poc-rg'
 
 foreach ($VM in Get-AzureRmVM -ResourceGroupName $rgName | Where-Object {$_.Tags.'Expiration DateTime' -ne $null}) {
     
