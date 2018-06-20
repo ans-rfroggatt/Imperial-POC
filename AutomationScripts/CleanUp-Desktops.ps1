@@ -1,6 +1,43 @@
-﻿##
+﻿<#
+    .DESCRIPTION
+        Runbook to cleanup expired virtual machine desktops based on Expiration DateTime tag.
+
+    .NOTES
+        AUTHOR: ANS - Ryan Froggatt
+        LASTEDIT: Jun 20, 2018
+#>
+
+
+$connectionName = "AzureRunAsConnection"
+try
+{
+    # Get the connection "AzureRunAsConnection "
+    $servicePrincipalConnection=Get-AutomationConnection -Name $connectionName         
+
+    "Logging in to Azure..."
+    Add-AzureRmAccount `
+        -ServicePrincipal `
+        -TenantId $servicePrincipalConnection.TenantId `
+        -ApplicationId $servicePrincipalConnection.ApplicationId `
+        -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint 
+}
+catch {
+    if (!$servicePrincipalConnection)
+    {
+        $ErrorMessage = "Connection $connectionName not found."
+        throw $ErrorMessage
+    } else{
+        Write-Error -Message $_.Exception
+        throw $_.Exception
+    }
+}
+
 
 $rgName = 'iac-uks-desktop-poc-rg'
+
+
+#Import ARM Module
+Import-Module -Name AzureRM
 
 foreach ($VM in Get-AzureRmVM -ResourceGroupName $rgName | Where-Object {$_.Tags.'Expiration DateTime' -ne $null}) {
     

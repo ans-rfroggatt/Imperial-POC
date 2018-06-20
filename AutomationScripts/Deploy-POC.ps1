@@ -46,15 +46,21 @@ New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-network-poc-rg -Te
 New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-automation-poc-rg -TemplateUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Infrastructure/Automation-Infrastructure.json `
 -TemplateParameterUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Infrastructure/Automation-Infrastructure-Parameters.json
 
+## Manual Steps!
+# Manually Update PowerShell Modules in Automation Account
+# Manually Import AzureRM.Network Module from Module Gallery in Automation Account
+# Manually Trigger creation of Run As Account
+# Manually re-assign Run As Account Service Principal to Contributor Permissions on the Resource Group
 
 # Trigger Azure Automation Runbook to Deploy Test Windows Desktop
 $params = @{"password"="Password123!!"; "vmsize"="Standard_A1"; "os"="Windows"; "expiration"="21 June 2018 13:00:00"}
-Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-deployment -ResourceGroupName iac-uks-automation-poc-rg –Parameters $params
+Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-deployment `
+-ResourceGroupName iac-uks-automation-poc-rg –Parameters $params
 
 # Trigger Azure Automation Runbook to Deploy Test Linux Desktop
 $params = @{"password"="Password123!!!"; "vmsize"="Standard_A1"; "os"="Linux"; "expiration"="21 June 2018 13:00:00"}
-Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-deployment -ResourceGroupName iac-uks-automation-poc-rg –Parameters $params
+Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-deployment `
+-ResourceGroupName iac-uks-automation-poc-rg –Parameters $params
 
 # Trigger Azure Automation Runbook to Clean Up Desktops
-$params = @{"password"="Password123!!!"; "vmsize"="Standard_A1"; "os"="Linux"}
-Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-cleanup -ResourceGroupName iac-uks-automation-poc-rg –Parameters $params
+Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-cleanup -ResourceGroupName iac-uks-automation-poc-rg

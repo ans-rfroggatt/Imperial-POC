@@ -5,6 +5,40 @@
 [string]$expiration
 )
 
+<#
+    .DESCRIPTION
+        Runbook to deploy virtual machine desktops on demand.
+
+    .NOTES
+        AUTHOR: ANS - Ryan Froggatt
+        LASTEDIT: Jun 20, 2018
+#>
+
+$connectionName = "AzureRunAsConnection"
+try
+{
+    # Get the connection "AzureRunAsConnection "
+    $servicePrincipalConnection=Get-AutomationConnection -Name $connectionName         
+
+    "Logging in to Azure..."
+    Add-AzureRmAccount `
+        -ServicePrincipal `
+        -TenantId $servicePrincipalConnection.TenantId `
+        -ApplicationId $servicePrincipalConnection.ApplicationId `
+        -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint 
+}
+catch {
+    if (!$servicePrincipalConnection)
+    {
+        $ErrorMessage = "Connection $connectionName not found."
+        throw $ErrorMessage
+    } else{
+        Write-Error -Message $_.Exception
+        throw $_.Exception
+    }
+}
+
+
 # Variables for common values
 $resourceGroup = "iac-uks-desktop-poc-rg"
 $location = "West Europe"
@@ -51,7 +85,7 @@ $nic = New-AzureRmNetworkInterface -Name "LDesktop-NIC-$rand" -ResourceGroupName
   -SubnetId $vnet.Subnets[1].Id -PublicIpAddressId $pip.Id -NetworkSecurityGroupId $nsg.Id
 
 # Create a virtual machine configuration
-$vmConfig = New-AzureRmVMConfig -VMName "LDesktop-$rand"  -VMSize $vmsize | `
+$vmConfig = New-AzureRmVMConfig -VMName "LDesktop-$rand"  -VMSize $vmsize -Tags @{'Expiration DateTime'=$expiration}| `
 Set-AzureRmVMOperatingSystem -Linux -ComputerName "LDesktop-$rand"  -Credential $cred | `
 Set-AzureRmVMSourceImage -PublisherName Canonical -Offer UbuntuServer -Skus 16.04-LTS -Version latest | `
 Add-AzureRmVMNetworkInterface -Id $nic.Id | `
@@ -62,6 +96,6 @@ Set-AzureRmVMBootDiagnostics -Disable
 $vm = New-AzureRmVM -ResourceGroupName $resourceGroup -Location $location -VM $vmConfig
 
 #Output VMName, Username and IP.
-Write-Host "VM Name    -> "$vm.OSProfile.ComputerName
-Write-Host "Username   -> "$vm.OSProfile.AdminUsername
-Write-Host "IP Address -> "$nic.IpConfigurations[0].PrivateIpAddress
+Write-Output "VM Name    -> "$vm.OSProfile.ComputerName
+Write-Output "Username   -> "$vm.OSProfile.AdminUsername
+Write-Output "IP Address -> "$nic.IpConfigurations[0].PrivateIpAddress
