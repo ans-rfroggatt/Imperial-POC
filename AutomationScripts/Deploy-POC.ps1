@@ -43,8 +43,14 @@ New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-network-poc-rg -Te
 
 
 # Deploy Infrastructure Automation Resources
-##New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-function-poc-rg -TemplateUri
+New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-automation-poc-rg -TemplateUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Infrastructure/Automation-Infrastructure.json `
+-TemplateParameterUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Infrastructure/Automation-Infrastructure-Parameters.json `
 
 
-# Trigger Azure Function to Deploy Test Desktop
-##.\Deploy-VM.ps1
+# Trigger Azure Automation Runbook to Deploy Test Windows Desktop
+$params = @{"password"="Password123!!"; "vmsize"="Standard_A1"; "os"="Windows"}
+Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-deployment -ResourceGroupName iac-uks-automation-poc-rg –Parameters $params
+
+# Trigger Azure Automation Runbook to Deploy Test Linux Desktop
+$params = @{"password"="Password123!!!"; "vmsize"="Standard_A1"; "os"="Linux"}
+Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-deployment -ResourceGroupName iac-uks-automation-poc-rg –Parameters $params

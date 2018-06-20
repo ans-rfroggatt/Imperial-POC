@@ -1,20 +1,17 @@
-﻿#Param(
-#[string]$secpasswd,
-#[string]$vmsize,
-#[string]$OperatingSystem
-#)
+﻿Param(
+[string]$password,
+[string]$vmsize,
+[string]$os
+)
 
 # Variables for common values
 $resourceGroup = "iac-uks-desktop-poc-rg"
 $location = "West Europe"
 $rand = Get-Random -Maximum 999999
 
-# TEMP
-$OperatingSystem = 'Windows'
-$vmsize = "Standard_A1"
-$secpasswd = ConvertTo-SecureString "Manchester21!" -AsPlainText -Force
 
 #Create Credential Object
+$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
 $cred = New-Object System.Management.Automation.PSCredential ("iac-admin", $secpasswd)
 
 # Create a public IP address and specify a DNS name
@@ -25,8 +22,9 @@ $pip = New-AzureRmPublicIpAddress -ResourceGroupName $resourceGroup -Location $l
 $vnet = Get-AzureRmVirtualNetwork -Name Workspace-vNet -ResourceGroupName iac-uks-network-poc-rg
 
 
+# Create Relevant Configuration Based on OS Type
+if ($os -eq 'Windows') {
 
-if ($OperatingSystem -eq 'Windows') {
 # Get Network Security Group
 $nsg = Get-AzureRmNetworkSecurityGroup -Name Windows-Desktop-NSG -ResourceGroupName iac-uks-network-poc-rg
 
@@ -42,7 +40,8 @@ Add-AzureRmVMNetworkInterface -Id $nic.Id | `
 Set-AzureRmVMBootDiagnostics -Disable
 }
 
-if ($OperatingSystem -eq 'Linux') {
+if ($os -eq 'Linux') {
+
 # Get Network Security Group
 $nsg = Get-AzureRmNetworkSecurityGroup -Name Linux-Desktop-NSG -ResourceGroupName iac-uks-network-poc-rg
 
@@ -58,8 +57,10 @@ Add-AzureRmVMNetworkInterface -Id $nic.Id | `
 Set-AzureRmVMBootDiagnostics -Disable
 }
 
-# Create a virtual machine
+# Create the Virtual Machine
 $vm = New-AzureRmVM -ResourceGroupName $resourceGroup -Location $location -VM $vmConfig
 
 #Output VMName, Username and IP.
-Write-Host $vm.OSProfile.ComputerName" -> "$vm.OSProfile.AdminUsername" -> "$nic.IpConfigurations[0].PrivateIpAddress
+Write-Host "VM Name    -> "$vm.OSProfile.ComputerName
+Write-Host "Username   -> "$vm.OSProfile.AdminUsername
+Write-Host "IP Address -> "$nic.IpConfigurations[0].PrivateIpAddress

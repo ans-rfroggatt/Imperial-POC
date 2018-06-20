@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "automationAccountName": {
+            "value": "iac-uks-desktop-automation"
+        },
+        "deploymentScriptUri": {
+            "value": "https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/AutomationScripts/Deploy-VM.ps1"
+        },
+        "cleanUpScriptUri": {
+            "value": "https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/AutomationScripts/Cleanup-VM.ps1"
+        }
+    }
+}

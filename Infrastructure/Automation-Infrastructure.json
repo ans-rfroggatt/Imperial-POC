@@ -62,9 +62,6 @@
                         },
                         "runbook": {
                             "name": "iac-uks-desktop-cleanup"
-                        },
-                        "parameters": {
-                            "ResourceGroupName": "iac-uks-desktop-poc-rg"
                         }
                     }
                 },
