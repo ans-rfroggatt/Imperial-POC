@@ -10,6 +10,9 @@
         },
         "cleanUpScriptUri": {
             "value": "https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/AutomationScripts/CleanUp-Desktops.ps1"
+        },
+        "uniqueString": {
+            "value": "iehasdfibesazyufvbsi"
         }
     }
 }
