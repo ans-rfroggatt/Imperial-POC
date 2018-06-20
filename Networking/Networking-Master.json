@@ -5,9 +5,9 @@
         "hub": {
             "type": "object",
             "defaultValue": {
-                "resourceGroup": "iac-uks-network-poc-rg",
+                "resourceGroup": "hub-rg",
                 "vnet": {
-                    "name": "Hub-VN",
+                    "name": "Hub",
                     "addressPrefixes": [
                         "10.0.0.0/16"
                     ]
@@ -18,7 +18,7 @@
                         "addressPrefix": "10.0.0.0/24"
                     },
                     {
-                        "name": "Management",
+                        "name": "Hub-Subnet1",
                         "addressPrefix": "10.0.1.0/24"
                     }
                 ],
@@ -33,39 +33,39 @@
             "type": "array",
             "defaultValue": [
                 {
-                    "resourceGroup": "iac-uks-network-poc-rg",
+                    "resourceGroup": "spokes-rg",
                     "vnet": {
-                        "name": "Workspace-VN",
+                        "name": "Spoke1",
                         "addressPrefixes": [
                             "10.1.0.0/16"
                         ]
                     },
                     "subnets": [
                         {
-                            "name": "Windows",
+                            "name": "Spoke1-Subnet1",
                             "addressPrefix": "10.1.0.0/24",
-                            "networkSecurityGroup": "Windows-Desktop-NSG"
+                            "networkSecurityGroup": "Spoke1-Subnet1-NSG"
                         },
                         {
-                            "name": "Linux",
+                            "name": "Spoke1-Subnet2",
                             "addressPrefix": "10.1.1.0/24",
-                            "networkSecurityGroup": "Linux-Desktop-NSG"
+                            "networkSecurityGroup": "Spoke1-Subnet2-NSG"
                         }
                     ]
                 },
                 {
-                    "resourceGroup": "iac-uks-network-poc-rg",
+                    "resourceGroup": "spokes-rg",
                     "vnet": {
-                        "name": "Batch-VN",
+                        "name": "Spoke2",
                         "addressPrefixes": [
                             "10.2.0.0/16"
                         ]
                     },
                     "subnets": [
                         {
-                            "name": "BatchCompute",
+                            "name": "Spoke2-Subnet1",
                             "addressPrefix": "10.2.0.0/24",
-                            "networkSecurityGroup": "Batch-NSG"
+                            "networkSecurityGroup": "Spoke2-Subnet1-NSG"
                         }
                     ]
                 }
@@ -77,24 +77,24 @@
         "nsg": {
             "type": "object",
             "defaultValue": {
-                "resourceGroup": "iac-uks-network-poc-rg",
+                "resourceGroup": "nsg-rg",
                 "securityGroups": [
                     {
-                        "name": "Windows-Desktop-NSG",
+                        "name": "Spoke1-Subnet1-NSG",
                         "protocol": "*",
                         "destinationPortRange": "3389",
                         "sourceAddressPrefix": "*",
                         "direction": "Inbound"
                     },
                     {
-                        "name": "Linux-Desktop-NSG",
+                        "name": "Spoke1-Subnet2-NSG",
                         "protocol": "*",
                         "destinationPortRange": "22",
                         "sourceAddressPrefix": "*",
                         "direction": "Inbound"
                     },
                     {
-                        "name": "Batch-NSG",
+                        "name": "Spoke2-Subnet1-NSG",
                         "protocol": "*",
                         "destinationPortRange": "22",
                         "sourceAddressPrefix": "*",

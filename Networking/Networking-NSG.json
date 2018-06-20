@@ -5,24 +5,24 @@
         "nsg": {
             "type": "object",
             "defaultValue": {
-                "resourcegroup": "iac-uks-network-poc-rg",
+                "resourcegroup": "nsg-rg",
                 "securitygroups": [
                     {
-                        "name": "Windows-Desktop-NSG",
+                        "name": "Spoke1-Subnet1-NSG",
                         "protocol": "*",
                         "destinationPortRange": "3389",
                         "sourceAddressPrefix": "*",
                         "direction": "Inbound"
                     },
                     {
-                        "name": "Linux-Desktop-NSG",
+                        "name": "Spoke1-Subnet2-NSG",
                         "protocol": "*",
                         "destinationPortRange": "22",
                         "sourceAddressPrefix": "*",
                         "direction": "Inbound"
                     },
                     {
-                        "name": "Batch-NSG",
+                        "name": "Spoke2-Subnet1-NSG",
                         "protocol": "*",
                         "destinationPortRange": "22",
                         "sourceAddressPrefix": "*",

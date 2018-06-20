@@ -13,9 +13,9 @@
     "hub": {
       "type": "object",
       "defaultValue": {
-        "resourceGroup": "core",
+        "resourceGroup": "hub-rg",
         "vnet": {
-          "name": "core"
+          "name": "Hub"
         }
       },
       "metadata": {
@@ -26,21 +26,21 @@
       "type": "object",
       "defaultValue": {
         "vnet": {
-          "name": "Spoke",
+          "name": "Spoke1",
           "addressPrefixes": [
             "10.99.0.0/16"
           ]
         },
         "subnets": [
           {
-            "name": "Windows",
+            "name": "Spoke1-Subnet1",
             "addressPrefix": "10.99.0.0/24",
-            "networkSecurityGroup": "Windows-Desktop-NSG"
+            "networkSecurityGroup": "Spoke1-Subnet1-NSG"
           },
           {
-            "name": "Linux",
+            "name": "Spoke1-Subnet2",
             "addressPrefix": "10.99.1.0/24",
-            "networkSecurityGroup": "Linux-Desktop-NSG"
+            "networkSecurityGroup": "Spoke1-Subnet2-NSG"
           }
         ]
       },
