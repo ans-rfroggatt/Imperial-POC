@@ -52,16 +52,16 @@
                     "type": "jobSchedules",
                     "dependsOn": [
                         "[parameters('automationAccountName')]",
-                        "iac-uks-desktop-cleanup",
-                        "iac-uks-desktop-cleanup-schedule"
+                        "[variables('cleanUpRunbookName')]",
+                        "[variables('cleanUpScheduleName')]"
                     ],
                     "apiVersion": "2015-10-31",
                     "properties": {
                         "schedule": {
-                            "name": "iac-uks-desktop-cleanup-schedule"
+                            "name": "[variables('cleanUpScheduleName')]"
                         },
                         "runbook": {
-                            "name": "iac-uks-desktop-cleanup"
+                            "name": "[variables('cleanUpRunbookName')]"
                         }
                     }
                 },
