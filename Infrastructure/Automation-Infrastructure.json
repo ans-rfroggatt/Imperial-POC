@@ -17,9 +17,9 @@
     },
     "variables": {
         "jobScheduleGuid": "[guid(resourceGroup().id)]",
-        "cleanUpScheduleName": "[concat(parameters('automationAccountName'), '-cleanup-schedule']",
-        "cleanUpRunbookName": "[concat(parameters('automationAccountName'), '-cleanup']",
-        "deploymentRunbookName": "[concat(parameters('automationAccountName'), '-deployment']"
+        "cleanUpScheduleName": "[concat(parameters('automationAccountName'), '-cleanup-schedule')]",
+        "cleanUpRunbookName": "[concat(parameters('automationAccountName'), '-cleanup')]",
+        "deploymentRunbookName": "[concat(parameters('automationAccountName'), '-deployment')]"
     },
     "resources": [
         {
