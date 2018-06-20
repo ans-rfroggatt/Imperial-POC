@@ -42,9 +42,9 @@ New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-network-poc-rg -Te
 -TemplateParameterUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Networking/Networking-Master-Parameters.json
 
 
-# Deploy Infrastructure Automation Resources
+# Deploy Automation Infrastructure Resources
 New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-automation-poc-rg -TemplateUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Infrastructure/Automation-Infrastructure.json `
--TemplateParameterUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Infrastructure/Automation-Infrastructure-Parameters.json `
+-TemplateParameterUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Infrastructure/Automation-Infrastructure-Parameters.json
 
 
 # Trigger Azure Automation Runbook to Deploy Test Windows Desktop
