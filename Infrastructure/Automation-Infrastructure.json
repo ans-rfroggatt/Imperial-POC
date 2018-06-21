@@ -23,8 +23,8 @@
         }
     },
     "variables": {
-        "UniqueStringBasedOnTimeStamp": "[uniqueString(deployment().name, parameters('randomString'))]",
-        "jobScheduleGuid": "[guid('AzureAutomationJobName', variables('UniqueStringBasedOnTimeStamp'))]",
+        "UniqueString": "[uniqueString(deployment().name, parameters('randomString'))]",
+        "jobScheduleGuid": "[guid('jobScheduleGuid', variables('UniqueString'))]",
         "cleanUpScheduleName": "[concat(parameters('automationAccountName'), '-cleanup-schedule')]",
         "cleanUpRunbookName": "[concat(parameters('automationAccountName'), '-cleanup')]",
         "deploymentRunbookName": "[concat(parameters('automationAccountName'), '-deployment')]"
