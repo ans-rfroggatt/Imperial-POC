@@ -1,4 +1,11 @@
-﻿# Deploy Imperial POC
+﻿<#
+    .DESCRIPTION
+        PS Script to Deploy Imperial POC Environment.
+
+    .NOTES
+        AUTHOR: ANS - Ryan Froggatt
+        LASTEDIT: Jun 21, 2018
+#>
 
 #Install and Import AzureRM Module
 Write-Host "[$(get-date -Format "dd/mm/yy hh:mm:ss")] Importing module..."
@@ -47,9 +54,9 @@ New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-automation-poc-rg 
 -TemplateParameterUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Infrastructure/Automation-Infrastructure-Parameters.json
 
 ## Manual Steps!
+# Manually Trigger creation of Run As Account
 # Manually Update PowerShell Modules in Automation Account
 # Manually Import AzureRM.Network Module from Module Gallery in Automation Account
-# Manually Trigger creation of Run As Account
 # Manually re-assign Run As Account Service Principal to Contributor Permissions on the Resource Group
 
 # Trigger Azure Automation Runbook to Deploy Test Windows Desktop

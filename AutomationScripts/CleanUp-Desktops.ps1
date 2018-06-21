@@ -4,7 +4,7 @@
 
     .NOTES
         AUTHOR: ANS - Ryan Froggatt
-        LASTEDIT: Jun 20, 2018
+        LASTEDIT: Jun 21, 2018
 #>
 
 
@@ -42,7 +42,7 @@ Import-Module -Name AzureRM
 foreach ($VM in Get-AzureRmVM -ResourceGroupName $rgName | Where-Object {$_.Tags.'Expiration DateTime' -ne $null}) {
     
     #Get Expiration DateTime Tag
-    $Expiration = $VM.Tags.'Expiration DateTime'
+    $Expiration = [DateTime]$VM.Tags.'Expiration DateTime'
 
     #Get Current DateTime
     $DateTime = Get-Date
