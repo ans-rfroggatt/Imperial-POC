@@ -47,3 +47,19 @@ function trigger_runbook() {
         });
     });
 }
+
+function get_job_output() {
+
+    context.acquireTokenWithClientCredentials(resource, applicationId, clientSecret, (err, tokenResponse) => {
+        if (err) {
+            console.log('well that didn\'t work: ' + err.stack);
+        }
+
+        request.get({
+            headers: { 'Authorization': 'Bearer ' + tokenResponse.accessToken },
+            url: 'https://management.azure.com/subscriptions/' + subscriptionId + '/resourceGroups/' + resourceGroupName + '/providers/Microsoft.Automation/automationAccounts/' + automationAccountName + '/jobs/' + jobId + 'output?api-version=2015-10-31',
+        }, function (error, response, body) {
+            console.log(body);
+        });
+    });
+}
