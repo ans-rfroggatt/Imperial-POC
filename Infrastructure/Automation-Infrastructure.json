@@ -14,6 +14,10 @@
             "type": "string",
             "defaultValue": "https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/AutomationScripts/CleanUp-Desktops.ps1"
         },
+        "cleanUpScriptStartTime": {
+            "type": "string",
+            "defaultValue": "2018-06-30T00:00:00-06:00"
+        },
         "randomString": {
             "type": "string"
         }
@@ -46,7 +50,7 @@
                     "apiVersion": "2015-10-31",
                     "properties": {
                         "description": "Hourly schedule for Desktop Cleanup Runbook",
-                        "startTime": "2018-06-21T00:00:00-06:00",
+                        "startTime": "[parameters('cleanUpScriptStartTime')]",
                         "frequency": "Hour",
                         "interval": 1
                     }

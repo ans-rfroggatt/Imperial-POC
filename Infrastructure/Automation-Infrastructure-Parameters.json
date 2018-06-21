@@ -11,8 +11,11 @@
         "cleanUpScriptUri": {
             "value": "https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/AutomationScripts/CleanUp-Desktops.ps1"
         },
+        "cleanUpScriptStartTime": {
+            "value": "2018-06-30T00:00:00-06:00"
+        },
         "randomString": {
-            "value": "iuabdiuandanlans"
+            "value": "kjfnjkfacjkak"
         }
     }
 }
