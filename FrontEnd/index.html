@@ -3,12 +3,41 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Build My Desktop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="main.js"></script>
 </head>
 <body>
-    
+    <h1>Build My Desktop!</h1>
+    <form>
+        Operating System:
+        <br>
+        <select name="operatingsystem">
+            <option value="Windows">Windows</option>
+            <option value="Linux">Linux</option>
+        </select>
+        <br>
+        VM Size:
+        <br>
+        <select name="vmsize">
+            <option value="Standard_A1">Standard_A1</option>
+            <option value="Standard_A2">Standard_A2</option>
+            <option value="Standard_A3">Standard_A3</option>
+        </select>
+        <br>
+         Password:
+        <br>
+        <input type="password" name="password">
+        <br>
+         Expiration:
+        <br>
+        <input type="text" name="expiration">
+        <br>
+
+        <br>
+    </form>
+    <button type="button">Submit</button>
 </body>
 </html>
