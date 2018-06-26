@@ -1,11 +1,4 @@
-﻿<#
-    .DESCRIPTION
-        PS Script to Deploy Imperial POC Environment.
-
-    .NOTES
-        AUTHOR: ANS - Ryan Froggatt
-        LASTEDIT: Jun 21, 2018
-#>
+﻿# Deploy Imperial POC
 
 #Install and Import AzureRM Module
 Write-Host "[$(get-date -Format "dd/mm/yy hh:mm:ss")] Importing module..."
@@ -54,10 +47,24 @@ New-AzureRmResourceGroupDeployment -ResourceGroupName iac-uks-automation-poc-rg 
 -TemplateParameterUri https://raw.githubusercontent.com/ans-rfroggatt/Imperial-POC/master/Infrastructure/Automation-Infrastructure-Parameters.json
 
 ## Manual Steps!
-# Manually Trigger creation of Run As Account
-# Manually Update PowerShell Modules in Automation Account
-# Manually Import AzureRM.Network Module from Module Gallery in Automation Account
-# Manually re-assign Run As Account Service Principal to Contributor Permissions on the Resource Group
+$readhost1 = "Have you updated PowerShell Modules in Automation Account? y/n"
+$readhost2 = "Have you imported AzureRM.Network Module from Module Gallery in Automation Account? y/n"
+$readhost3 = "Have you performed a creation of a Run As Account? y/n"
+$readhost4 = "Have you assigned Run As Account Service Principal to Contributor Permissions on the Resource Group? y/n"
+$i = 0
+do {
+    $response = Read-Host -Prompt $readhost1
+    if ($response -eq 'y') {
+        $response = Read-Host -Prompt $readhost2
+        if ($response -eq 'y') {
+            $response = Read-Host -Prompt $readhost3
+            if ($response -eq 'y') {
+                $response = Read-Host -Prompt $readhost4
+                $i++
+            } else { Write-Host "Restarting Pre-Checks!"}
+        } else { Write-Host "Restarting Pre-Checks!"}
+    }  else { Write-Host "Restarting Pre-Checks!"}  
+} while ($i -lt 1)
 
 # Trigger Azure Automation Runbook to Deploy Test Windows Desktop
 $params = @{"password"="Password123!!"; "vmsize"="Standard_A1"; "os"="Windows"; "expiration"="21 June 2018 13:00:00"}
