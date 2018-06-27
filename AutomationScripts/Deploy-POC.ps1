@@ -67,14 +67,21 @@ do {
 } while ($i -lt 1)
 
 # Trigger Azure Automation Runbook to Deploy Test Windows Desktop
-$params = @{"password"="Password123!!"; "vmsize"="Standard_A1"; "os"="Windows"; "expiration"="21 June 2018 13:00:00"}
+$params = @{"password"="Password123!!"; "vmsize"="Standard_A1"; "os"="Windows"; "expiration"="27 June 2018 17:00:00"}
 Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-deployment `
 -ResourceGroupName iac-uks-automation-poc-rg –Parameters $params
 
 # Trigger Azure Automation Runbook to Deploy Test Linux Desktop
-$params = @{"password"="Password123!!!"; "vmsize"="Standard_A1"; "os"="Linux"; "expiration"="21 June 2018 13:00:00"}
+$params = @{"password"="Password123!!!"; "vmsize"="Standard_A1"; "os"="Linux"; "expiration"="27 June 2018 17:00:00"}
 Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-deployment `
 -ResourceGroupName iac-uks-automation-poc-rg –Parameters $params
 
-# Trigger Azure Automation Runbook to Clean Up Desktops
-Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-cleanup -ResourceGroupName iac-uks-automation-poc-rg
+$readhost5 = Read-Host "Would you like to Clean Up the desktops? y/n"
+$i = 0
+do {
+    $response = Read-Host -Prompt $readhost5
+    if ($response -eq 'y') {
+        # Trigger Azure Automation Runbook to Clean Up Desktops
+        Start-AzureRmAutomationRunbook –AutomationAccountName iac-uks-desktop-automation -Name iac-uks-desktop-automation-cleanup -ResourceGroupName iac-uks-automation-poc-rg
+    }  else { Write-Host "Exiting..."; Start-Sleep 5 }  
+} while ($i -lt 1)
