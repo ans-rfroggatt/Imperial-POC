@@ -78,7 +78,7 @@
                                 "destinationPortRange": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].destinationPortRange]",
                                 "sourceAddressPrefix": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].sourceAddressPrefix]",
                                 "destinationAddressPrefix": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].destinationAddressPrefix]",
-                                "access": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].allow]",
+                                "access": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].access]",
                                 "priority": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].priority]",
                                 "direction": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].direction]"
                             }
