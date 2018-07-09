@@ -210,7 +210,8 @@
             "copy": {
                 "name": "nsgcopy",
                 "count": "[length(parameters('securitygroups'))]",
-                "mode": "Serial"
+                "mode": "Serial",
+                "batchSize": 1                
             },
             "properties": {
                 "mode": "Incremental",
