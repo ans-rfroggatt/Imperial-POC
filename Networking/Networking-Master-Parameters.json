@@ -92,7 +92,7 @@
                             "sourceAddressPrefix": "192.168.0.0/24",
                             "destinationPortRange": "22",
                             "destinationAddressPrefix": "*",
-                            "priority": 110
+                            "priority": 120
                         }
                     ]
                 },
