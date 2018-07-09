@@ -206,7 +206,7 @@
             "name": "deployNsg",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "resourceGroup": "[parameters('securitygroups')[copyIndex('nsgcopy')].resourceGroup]",
+            "resourceGroup": "[parameters('securitygroups')[copyIndex()].resourceGroup]",
             "copy": {
                 "name": "nsgcopy",
                 "count": "[length(parameters('securitygroups'))]",
@@ -215,8 +215,8 @@
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "securitygroups": {
-                        "value": "[parameters('securitygroups')]"
+                    "securitygroup": {
+                        "value": "[parameters('securitygroups')[copyIndex()]]"
                     }
                 },
                 "templateLink": {
