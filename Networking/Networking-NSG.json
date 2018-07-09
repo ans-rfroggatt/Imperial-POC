@@ -72,6 +72,7 @@
                             "name": "rulecopy",
                             "count": "[length(parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules)]",
                             "input": {
+                                "ruleName": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].ruleName]",
                                 "protocol": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].protocol]",
                                 "sourcePortRange": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].sourcePortRange]",
                                 "destinationPortRange": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].destinationPortRange]",
