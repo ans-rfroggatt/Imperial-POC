@@ -70,7 +70,7 @@
                     "copy": [
                         {
                             "name": "rulescopy",
-                            "count": "[length(parameters('nsg').securitygroups[copyIndex('nsgloop')].rules)]",
+                            "count": "[length(parameters('nsg').securitygroups.rules[copyIndex('nsgloop')])]",
                             "input": {
                                 "protocol": "[parameters('nsg').securitygroups.rules[copyIndex('rulescopy')].protocol]",
                                 "sourcePortRange": "[parameters('nsg').securitygroups.rules[copyIndex('rulescopy')].sourcePortRange]",
