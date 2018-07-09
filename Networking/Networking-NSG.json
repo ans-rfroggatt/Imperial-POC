@@ -60,8 +60,7 @@
             "location": "[resourceGroup().location]",
             "copy": {
                 "name": "nsgloop",
-                "count": "[length(parameters('securitygroups'))]",
-                "mode": "parallel"
+                "count": "[length(parameters('securitygroups'))]"
             },
             "properties": {
                 "securityRules": {
