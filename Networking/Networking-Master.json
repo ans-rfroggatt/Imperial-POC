@@ -79,6 +79,7 @@
             "defaultValue": [
                 {
                     "name": "Spoke1-Subnet1-NSG",
+                    "resourceGroup": "spokes-rg",
                     "nsgrules": [
                         {
                             "ruleName": "Rule1",
@@ -106,6 +107,7 @@
                 },
                 {
                     "name": "Spoke1-Subnet2-NSG",
+                    "resourceGroup": "spokes-rg",
                     "nsgrules": [
                         {
                             "ruleName": "Rule1",
@@ -120,7 +122,10 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "metadata": {
+                "description": "Array of network securoty group objects. See defaultValue for example."
+            }
         }
     },
     "variables": {
@@ -173,8 +178,8 @@
                 "deployNsg"
             ],
             "copy": {
-                "name": "spokecopy",
-                "count": "[length(parameters('spokes'))]",
+                "name": "spokes",
+                "count": "[length(parameters('securitygroups'))]",
                 "mode": "Serial",
                 "batchSize": 1
             },
@@ -201,7 +206,12 @@
             "name": "deployNsg",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "resourceGroup": "[parameters('hub').resourceGroup]",
+            "resourceGroup": "[parameters('securitygroups')[copyIndex('nsgcopy')].resourceGroup]",
+            "copy": {
+                "name": "nsgcopy",
+                "count": "[length(parameters('securitygroups'))]",
+                "mode": "Serial"
+            },
             "properties": {
                 "mode": "Incremental",
                 "parameters": {

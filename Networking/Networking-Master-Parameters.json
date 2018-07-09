@@ -70,6 +70,7 @@
             "value": [
                 {
                     "name": "Windows-Desktop-NSG",
+                    "resourceGroup": "iac-uks-network-poc-rg",
                     "nsgrules": [
                         {
                             "ruleName": "Rule1",
@@ -97,6 +98,7 @@
                 },
                 {
                     "name": "Linux-Desktop-NSG",
+                    "resourceGroup": "iac-uks-network-poc-rg",
                     "nsgrules": [
                         {
                             "ruleName": "Rule1",
@@ -113,6 +115,7 @@
                 },
                 {
                     "name": "Batch-NSG",
+                    "resourceGroup": "iac-uks-network-poc-rg",
                     "nsgrules": [
                         {
                             "ruleName": "Rule1",

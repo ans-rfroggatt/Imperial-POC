@@ -7,6 +7,7 @@
             "defaultValue": [
                 {
                     "name": "Spoke1-Subnet1-NSG",
+                    "resourceGroup": "spokes-rg",
                     "nsgrules": [
                         {
                             "ruleName": "Rule1",
@@ -34,6 +35,7 @@
                 },
                 {
                     "name": "Spoke1-Subnet2-NSG",
+                    "resourceGroup": "spokes-rg",
                     "nsgrules": [
                         {
                             "ruleName": "Rule1",
