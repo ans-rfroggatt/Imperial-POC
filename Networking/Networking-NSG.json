@@ -9,7 +9,7 @@
                 "securitygroups": [
                     {
                         "name": "Spoke1-Subnet1-NSG",
-                        "rules": [
+                        "nsgrules": [
                             {
                                 "ruleName": "Rule1",
                                 "protocol": "*",
@@ -36,7 +36,7 @@
                     },
                     {
                         "name": "Spoke1-Subnet2-NSG",
-                        "rules": [
+                        "nsgrules": [
                             {
                                 "ruleName": "Rule1",
                                 "protocol": "*",
@@ -69,17 +69,17 @@
                 "securityRules": {
                     "copy": [
                         {
-                            "name": "rulescopy",
-                            "count": "[length(parameters('nsg').securitygroups[copyIndex()].rules)]",
+                            "name": "rulecopy",
+                            "count": "[length(parameters('nsg').securitygroups[copyIndex()].nsgrules)]",
                             "input": {
-                                "protocol": "[parameters('nsg').securitygroups.rules[copyIndex('rulescopy')].protocol]",
-                                "sourcePortRange": "[parameters('nsg').securitygroups.rules[copyIndex('rulescopy')].sourcePortRange]",
-                                "destinationPortRange": "[parameters('nsg').securitygroups.rules[copyIndex('rulescopy')].destinationPortRange]",
-                                "sourceAddressPrefix": "[parameters('nsg').securitygroups.rules[copyIndex('rulescopy')].sourceAddressPrefix]",
-                                "destinationAddressPrefix": "[parameters('nsg').securitygroups.rules[copyIndex('rulescopy')].destinationAddressPrefix]",
-                                "access": "[parameters('nsg').securitygroups.rules[copyIndex('rulescopy')].allow]",
-                                "priority": "[parameters('nsg').securitygroups.rules[copyIndex('rulescopy')].priority]",
-                                "direction": "[parameters('nsg').securitygroups.rules[copyIndex('rulescopy')].direction]"
+                                "protocol": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].protocol]",
+                                "sourcePortRange": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].sourcePortRange]",
+                                "destinationPortRange": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].destinationPortRange]",
+                                "sourceAddressPrefix": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].sourceAddressPrefix]",
+                                "destinationAddressPrefix": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].destinationAddressPrefix]",
+                                "access": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].allow]",
+                                "priority": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].priority]",
+                                "direction": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].direction]"
                             }
                         }
                     ]
