@@ -181,24 +181,24 @@
                 "batchSize": 1
             },
             "properties": {
-              "mode": "Incremental",
-              "parameters": {
-                "peer": {
-                    "value": true
+                "mode": "Incremental",
+                "parameters": {
+                    "peer": {
+                        "value": true
+                    },
+                    "hub": {
+                        "value": "[parameters('hub')]"
+                    },
+                    "spoke": {
+                        "value": "[parameters('spokes')[copyIndex()]]"
+                    }
                 },
-                "hub": {
-                    "value": "[parameters('hub')]"
-                },
-                "spoke": {
-                    "value": "[parameters('spokes')[copyIndex()]]"
+                "templateLink": {
+                    "uri": "[variables('spokeUrl')]",
+                    "contentVersion": "1.0.0.0"
                 }
-              },
-              "templateLink": {
-                "uri": "[variables('spokeUrl')]",
-                "contentVersion": "1.0.0.0"
-              }
             }
-          }
+        },
         {
             "name": "[concat('deployNsg', copyIndex(1), '-', parameters('securitygroups')[copyIndex()].name)]",
             "type": "Microsoft.Resources/deployments",
@@ -208,7 +208,7 @@
                 "name": "nsgcopy",
                 "count": "[length(parameters('securitygroups'))]",
                 "mode": "Serial",
-                "batchSize": 1                
+                "batchSize": 1
             },
             "properties": {
                 "mode": "Incremental",
