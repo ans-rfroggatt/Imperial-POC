@@ -205,7 +205,7 @@
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "nsg": {
+                    "securitygroups": {
                         "value": "[parameters('securitygroups')]"
                     }
                 },
