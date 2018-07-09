@@ -216,7 +216,7 @@
                 "mode": "Incremental",
                 "parameters": {
                     "securitygroup": {
-                        "value": "[parameters('securitygroups')[copyIndex('nsgcopy')]]"
+                        "value": "[parameters('securitygroups')[copyIndex()]]"
                     }
                 },
                 "templateLink": {
