@@ -216,8 +216,11 @@
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "securitygroup": {
-                        "value": "[parameters('securitygroups')[copyIndex()]]"
+                    "securitygroupname": {
+                        "value": "[parameters('securitygroups')[copyIndex()].name]"
+                    },
+                    "securitygrouprules": {
+                        "value": "[parameters('securitygroups')[copyIndex()].nsgrules]"
                     }
                 },
                 "templateLink": {

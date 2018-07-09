@@ -2,42 +2,42 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "securitygroup": {
-            "type": "object",
-            "defaultValue": {
-                "name": "Spoke1-Subnet1-NSG",
-                "resourceGroup": "spokes-rg",
-                "nsgrules": [
-                    {
-                        "ruleName": "Rule1",
-                        "protocol": "*",
-                        "direction": "Inbound",
-                        "access": "Allow",
-                        "sourcePortRange": "*",
-                        "sourceAddressPrefix": "192.168.0.0/24",
-                        "destinationPortRange": "3389",
-                        "destinationAddressPrefix": "*",
-                        "priority": 110
-                    },
-                    {
-                        "ruleName": "Rule2",
-                        "protocol": "*",
-                        "direction": "Inbound",
-                        "access": "Allow",
-                        "sourcePortRange": "*",
-                        "sourceAddressPrefix": "192.168.0.0/24",
-                        "destinationPortRange": "22",
-                        "destinationAddressPrefix": "*",
-                        "priority": 120
-                    }
-                ]
-            }
+        "securitygroupname": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "securitygrouprules": {
+            "type": "array",
+            "defaultValue": [
+                {
+                    "ruleName": "Rule1",
+                    "protocol": "*",
+                    "direction": "Inbound",
+                    "access": "Allow",
+                    "sourcePortRange": "*",
+                    "sourceAddressPrefix": "192.168.0.0/24",
+                    "destinationPortRange": "3389",
+                    "destinationAddressPrefix": "*",
+                    "priority": 110
+                },
+                {
+                    "ruleName": "Rule2",
+                    "protocol": "*",
+                    "direction": "Inbound",
+                    "access": "Allow",
+                    "sourcePortRange": "*",
+                    "sourceAddressPrefix": "192.168.0.0/24",
+                    "destinationPortRange": "22",
+                    "destinationAddressPrefix": "*",
+                    "priority": 120
+                }
+            ]
         }
     },
     "variables": {},
     "resources": [
         {
-            "name": "[parameters('securitygroup').name]",
+            "name": "[parameters('securitygroupname')]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2017-10-01",
             "location": "[resourceGroup().location]",
@@ -45,18 +45,18 @@
                 "copy": [
                     {
                         "name": "securityRules",
-                        "count": "[length(parameters('securitygroup').nsgrules)]",
+                        "count": "[length(parameters('securitygrouprules'))]",
                         "input": {
-                            "name": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].ruleName]",
+                            "name": "[parameters('securitygrouprules')[copyIndex('securityRules')].ruleName]",
                             "properties": {
-                                "protocol": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].protocol]",
-                                "sourcePortRange": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].sourcePortRange]",
-                                "destinationPortRange": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].destinationPortRange]",
-                                "sourceAddressPrefix": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].sourceAddressPrefix]",
-                                "destinationAddressPrefix": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].destinationAddressPrefix]",
-                                "access": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].access]",
-                                "priority": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].priority]",
-                                "direction": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].direction]"
+                                "protocol": "[parameters('securitygrouprules')[copyIndex('securityRules')].protocol]",
+                                "sourcePortRange": "[parameters('securitygrouprules')[copyIndex('securityRules')].sourcePortRange]",
+                                "destinationPortRange": "[parameters('securitygrouprules')[copyIndex('securityRules')].destinationPortRange]",
+                                "sourceAddressPrefix": "[parameters('securitygrouprules')[copyIndex('securityRules')].sourceAddressPrefix]",
+                                "destinationAddressPrefix": "[parameters('securitygrouprules')[copyIndex('securityRules')].destinationAddressPrefix]",
+                                "access": "[parameters('securitygrouprules')[copyIndex('securityRules')].access]",
+                                "priority": "[parameters('securitygrouprules')[copyIndex('securityRules')].priority]",
+                                "direction": "[parameters('securitygrouprules')[copyIndex('securityRules')].direction]"
                             }
                         }
                     }
