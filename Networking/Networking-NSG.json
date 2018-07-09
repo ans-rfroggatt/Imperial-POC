@@ -72,15 +72,15 @@
                             "name": "rulecopy",
                             "count": "[length(parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules)]",
                             "input": {
-                                "ruleName": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].ruleName]",
-                                "protocol": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].protocol]",
-                                "sourcePortRange": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].sourcePortRange]",
-                                "destinationPortRange": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].destinationPortRange]",
-                                "sourceAddressPrefix": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].sourceAddressPrefix]",
-                                "destinationAddressPrefix": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].destinationAddressPrefix]",
-                                "access": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].access]",
-                                "priority": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].priority]",
-                                "direction": "[parameters('nsg').securitygroups.nsgrules[copyIndex('rulecopy')].direction]"
+                                "ruleName": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].ruleName]",
+                                "protocol": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].protocol]",
+                                "sourcePortRange": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].sourcePortRange]",
+                                "destinationPortRange": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].destinationPortRange]",
+                                "sourceAddressPrefix": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].sourceAddressPrefix]",
+                                "destinationAddressPrefix": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].destinationAddressPrefix]",
+                                "access": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].access]",
+                                "priority": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].priority]",
+                                "direction": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].direction]"
                             }
                         }
                     ]
