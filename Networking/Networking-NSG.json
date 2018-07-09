@@ -57,7 +57,7 @@
     "variables": {},
     "resources": [
         {
-            "name": "[parameters('nsg').securitygroups[copyIndex()].name]",
+            "name": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].name]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2017-10-01",
             "location": "[resourceGroup().location]",
