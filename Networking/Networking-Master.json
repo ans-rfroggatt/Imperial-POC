@@ -178,7 +178,7 @@
                 "[concat('deployNsg', copyIndex(1), '-', parameters('securitygroups')[copyIndex()].name)]"
             ],
             "copy": {
-                "name": "spokes",
+                "name": "spokecopy",
                 "count": "[length(parameters('securitygroups'))]",
                 "mode": "Serial",
                 "batchSize": 1
