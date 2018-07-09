@@ -124,7 +124,7 @@
                 }
             ],
             "metadata": {
-                "description": "Array of network securoty group objects. See defaultValue for example."
+                "description": "Array of network security group objects. See defaultValue for example."
             }
         }
     },
@@ -175,7 +175,7 @@
             "resourceGroup": "[parameters('spokes')[copyIndex()].resourceGroup]",
             "dependsOn": [
                 "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]",
-                "deployNsg"
+                "[concat('deployNsg', copyIndex(1), '-', parameters('securitygroups')[copyIndex()].name)]"
             ],
             "copy": {
                 "name": "spokes",
@@ -216,7 +216,7 @@
                 "mode": "Incremental",
                 "parameters": {
                     "securitygroup": {
-                        "value": "[parameters('securitygroups')[copyIndex()]]"
+                        "value": "[parameters('securitygroups')[copyIndex('nsgcopy')]]"
                     }
                 },
                 "templateLink": {
