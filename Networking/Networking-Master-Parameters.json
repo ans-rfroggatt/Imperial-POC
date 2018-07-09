@@ -106,6 +106,17 @@
                                 "destinationPortRange": "3389",
                                 "destinationAddressPrefix": "*",
                                 "priority": 110
+                            },
+                            {
+                                "ruleName": "Rule1",
+                                "protocol": "*",
+                                "direction": "Inbound",
+                                "access": "Allow",
+                                "sourcePortRange": "*",
+                                "sourceAddressPrefix": "192.168.0.0/24",
+                                "destinationPortRange": "22",
+                                "destinationAddressPrefix": "*",
+                                "priority": 110
                             }
                         ]
                     },
@@ -135,7 +146,7 @@
                                 "access": "Allow",
                                 "sourcePortRange": "*",
                                 "sourceAddressPrefix": "192.168.0.0/24",
-                                "destinationPortRange": "22",
+                                "destinationPortRange": "80",
                                 "destinationAddressPrefix": "*",
                                 "priority": 110
                             }
