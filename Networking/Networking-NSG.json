@@ -2,67 +2,65 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "nsg": {
+        "securitygroups": {
             "type": "array",
-            "defaultValue": {
-                "securitygroups": [
-                    {
-                        "name": "Spoke1-Subnet1-NSG",
-                        "nsgrules": [
-                            {
-                                "ruleName": "Rule1",
-                                "protocol": "*",
-                                "direction": "Inbound",
-                                "access": "Allow",
-                                "sourcePortRange": "*",
-                                "sourceAddressPrefix": "192.168.0.0/24",
-                                "destinationPortRange": "3389",
-                                "destinationAddressPrefix": "*",
-                                "priority": 110
-                            },
-                            {
-                                "ruleName": "Rule2",
-                                "protocol": "*",
-                                "direction": "Inbound",
-                                "access": "Allow",
-                                "sourcePortRange": "*",
-                                "sourceAddressPrefix": "192.168.0.0/24",
-                                "destinationPortRange": "22",
-                                "destinationAddressPrefix": "*",
-                                "priority": 120
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Spoke1-Subnet2-NSG",
-                        "nsgrules": [
-                            {
-                                "ruleName": "Rule1",
-                                "protocol": "*",
-                                "direction": "Inbound",
-                                "access": "Allow",
-                                "sourcePortRange": "*",
-                                "sourceAddressPrefix": "*",
-                                "destinationPortRange": "80",
-                                "destinationAddressPrefix": "*",
-                                "priority": 110
-                            }
-                        ]
-                    }
-                ]
-            }
+            "defaultValue": [
+                {
+                    "name": "Spoke1-Subnet1-NSG",
+                    "nsgrules": [
+                        {
+                            "ruleName": "Rule1",
+                            "protocol": "*",
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "192.168.0.0/24",
+                            "destinationPortRange": "3389",
+                            "destinationAddressPrefix": "*",
+                            "priority": 110
+                        },
+                        {
+                            "ruleName": "Rule2",
+                            "protocol": "*",
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "192.168.0.0/24",
+                            "destinationPortRange": "22",
+                            "destinationAddressPrefix": "*",
+                            "priority": 120
+                        }
+                    ]
+                },
+                {
+                    "name": "Spoke1-Subnet2-NSG",
+                    "nsgrules": [
+                        {
+                            "ruleName": "Rule1",
+                            "protocol": "*",
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationPortRange": "80",
+                            "destinationAddressPrefix": "*",
+                            "priority": 110
+                        }
+                    ]
+                }
+            ]
         }
     },
     "variables": {},
     "resources": [
         {
-            "name": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].name]",
+            "name": "[parameters('securitygroups')[copyIndex('nsgloop')].name]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2017-10-01",
             "location": "[resourceGroup().location]",
             "copy": {
                 "name": "nsgloop",
-                "count": "[length(parameters('nsg').securitygroups)]",
+                "count": "[length(parameters('securitygroups'))]",
                 "mode": "parallel"
             },
             "properties": {
@@ -70,18 +68,18 @@
                     "copy": [
                         {
                             "name": "rulecopy",
-                            "count": "[length(parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules)]",
+                            "count": "[length(parameters('securitygroups').securitygroups[copyIndex('nsgloop')].nsgrules)]",
                             "input": {
-                                "name": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].ruleName]",
+                                "name": "[parameters('securitygroups')[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].ruleName]",
                                 "properties": {
-                                    "protocol": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].protocol]",
-                                    "sourcePortRange": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].sourcePortRange]",
-                                    "destinationPortRange": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].destinationPortRange]",
-                                    "sourceAddressPrefix": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].sourceAddressPrefix]",
-                                    "destinationAddressPrefix": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].destinationAddressPrefix]",
-                                    "access": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].access]",
-                                    "priority": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].priority]",
-                                    "direction": "[parameters('nsg').securitygroups[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].direction]"
+                                    "protocol": "[parameters('securitygroups')[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].protocol]",
+                                    "sourcePortRange": "[parameters('securitygroups')[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].sourcePortRange]",
+                                    "destinationPortRange": "[parameters('securitygroups')[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].destinationPortRange]",
+                                    "sourceAddressPrefix": "[parameters('securitygroups')[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].sourceAddressPrefix]",
+                                    "destinationAddressPrefix": "[parameters('securitygroups')[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].destinationAddressPrefix]",
+                                    "access": "[parameters('securitygroups')[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].access]",
+                                    "priority": "[parameters('securitygroups')[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].priority]",
+                                    "direction": "[parameters('securitygroups')[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].direction]"
                                 }
                             }
                         }

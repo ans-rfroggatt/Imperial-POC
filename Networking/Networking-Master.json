@@ -74,39 +74,53 @@
                 "description": "Array of spoke objects. See defaultValue for example."
             }
         },
-        "nsg": {
+        "securitygroups": {
             "type": "array",
-            "defaultValue": {
-                "securitygroups": [
-                    {
-                        "name": "Spoke1-Subnet1-NSG",
-                        "rules": [
-                            {
-                                "ruleName": "Rule1",
-                                "protocol": "*",
-                                "direction": "Inbound",
-                                "access": "Allow",
-                                "sourcePortRange": "*",
-                                "sourceAddressPrefix": "192.168.0.0/24",
-                                "destinationPortRange": "3389",
-                                "destinationAddressPrefix": "*",
-                                "priority": 110
-                            },
-                            {
-                                "ruleName": "Rule2",
-                                "protocol": "*",
-                                "direction": "Inbound",
-                                "access": "Allow",
-                                "sourcePortRange": "*",
-                                "sourceAddressPrefix": "192.168.0.0/24",
-                                "destinationPortRange": "22",
-                                "destinationAddressPrefix": "*",
-                                "priority": 120
-                            }
-                        ]
-                    }
-                ]
-            }
+            "defaultValue": [
+                {
+                    "name": "Spoke1-Subnet1-NSG",
+                    "nsgrules": [
+                        {
+                            "ruleName": "Rule1",
+                            "protocol": "*",
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "192.168.0.0/24",
+                            "destinationPortRange": "3389",
+                            "destinationAddressPrefix": "*",
+                            "priority": 110
+                        },
+                        {
+                            "ruleName": "Rule2",
+                            "protocol": "*",
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "192.168.0.0/24",
+                            "destinationPortRange": "22",
+                            "destinationAddressPrefix": "*",
+                            "priority": 120
+                        }
+                    ]
+                },
+                {
+                    "name": "Spoke1-Subnet2-NSG",
+                    "nsgrules": [
+                        {
+                            "ruleName": "Rule1",
+                            "protocol": "*",
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationPortRange": "80",
+                            "destinationAddressPrefix": "*",
+                            "priority": 110
+                        }
+                    ]
+                }
+            ]
         }
     },
     "variables": {
@@ -187,12 +201,12 @@
             "name": "deployNsg",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "resourceGroup": "[parameters('nsg').resourceGroup]",
+            "resourceGroup": "[parameters('hub').resourceGroup]",
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
                     "nsg": {
-                        "value": "[parameters('nsg')]"
+                        "value": "[parameters('securitygroups')]"
                     }
                 },
                 "templateLink": {
