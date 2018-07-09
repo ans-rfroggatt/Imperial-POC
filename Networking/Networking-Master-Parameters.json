@@ -68,7 +68,6 @@
         },
         "nsg": {
             "value": {
-                "resourceGroup": "iac-uks-network-poc-rg",
                 "securitygroups": [
                     {
                         "name": "Windows-Desktop-NSG",

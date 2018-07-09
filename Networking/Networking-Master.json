@@ -75,9 +75,8 @@
             }
         },
         "nsg": {
-            "type": "object",
+            "type": "array",
             "defaultValue": {
-                "resourceGroup": "nsg-rg",
                 "securitygroups": [
                     {
                         "name": "Spoke1-Subnet1-NSG",
