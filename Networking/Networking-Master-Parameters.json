@@ -84,7 +84,7 @@
                             "priority": 110
                         },
                         {
-                            "ruleName": "Rule1",
+                            "ruleName": "Rule2",
                             "protocol": "*",
                             "direction": "Inbound",
                             "access": "Allow",
