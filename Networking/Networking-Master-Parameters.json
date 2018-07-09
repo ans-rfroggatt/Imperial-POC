@@ -69,33 +69,10 @@
         "nsg": {
             "value": {
                 "resourceGroup": "iac-uks-network-poc-rg",
-                "securityGroups": [
-                    {
-                        "name": "Windows-Desktop-NSG",
-                        "protocol": "*",
-                        "destinationPortRange": "3389",
-                        "sourceAddressPrefix": "*",
-                        "direction": "Inbound"
-                    },
-                    {
-                        "name": "Linux-Desktop-NSG",
-                        "protocol": "*",
-                        "destinationPortRange": "22",
-                        "sourceAddressPrefix": "*",
-                        "direction": "Inbound"
-                    },
-                    {
-                        "name": "Batch-NSG",
-                        "protocol": "*",
-                        "destinationPortRange": "22",
-                        "sourceAddressPrefix": "*",
-                        "direction": "Inbound"
-                    }
-                ],
                 "securitygroups": [
                     {
                         "name": "Windows-Desktop-NSG",
-                        "rules": [
+                        "nsgrules": [
                             {
                                 "ruleName": "Rule1",
                                 "protocol": "*",
@@ -122,7 +99,7 @@
                     },
                     {
                         "name": "Linux-Desktop-NSG",
-                        "rules": [
+                        "nsgrules": [
                             {
                                 "ruleName": "Rule1",
                                 "protocol": "*",
@@ -138,7 +115,7 @@
                     },
                     {
                         "name": "Batch-NSG",
-                        "rules": [
+                        "nsgrules": [
                             {
                                 "ruleName": "Rule1",
                                 "protocol": "*",
