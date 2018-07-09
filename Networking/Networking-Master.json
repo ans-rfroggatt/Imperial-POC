@@ -140,9 +140,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
             "resourceGroup": "[parameters('hub').resourceGroup]",
-            "dependsOn": [
-                "deployNsg"
-            ],
+            "dependsOn": [],
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
@@ -174,34 +172,33 @@
             "apiVersion": "2017-05-10",
             "resourceGroup": "[parameters('spokes')[copyIndex()].resourceGroup]",
             "dependsOn": [
-                "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]",
-                "[concat('deployNsg', copyIndex(1), '-', parameters('securitygroups')[copyIndex()].name)]"
+                "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]"
             ],
             "copy": {
                 "name": "spokecopy",
-                "count": "[length(parameters('securitygroups'))]",
+                "count": "[length(parameters('spokes'))]",
                 "mode": "Serial",
                 "batchSize": 1
             },
             "properties": {
-                "mode": "Incremental",
-                "parameters": {
-                    "peer": {
-                        "value": true
-                    },
-                    "hub": {
-                        "value": "[parameters('hub')]"
-                    },
-                    "spoke": {
-                        "value": "[parameters('spokes')[copyIndex()]]"
-                    }
+              "mode": "Incremental",
+              "parameters": {
+                "peer": {
+                    "value": true
                 },
-                "templateLink": {
-                    "uri": "[variables('spokeUrl')]",
-                    "contentVersion": "1.0.0.0"
+                "hub": {
+                    "value": "[parameters('hub')]"
+                },
+                "spoke": {
+                    "value": "[parameters('spokes')[copyIndex()]]"
                 }
+              },
+              "templateLink": {
+                "uri": "[variables('spokeUrl')]",
+                "contentVersion": "1.0.0.0"
+              }
             }
-        },
+          }
         {
             "name": "[concat('deployNsg', copyIndex(1), '-', parameters('securitygroups')[copyIndex()].name)]",
             "type": "Microsoft.Resources/deployments",
