@@ -78,27 +78,33 @@
             "type": "object",
             "defaultValue": {
                 "resourceGroup": "nsg-rg",
-                "securityGroups": [
+                "securitygroups": [
                     {
                         "name": "Spoke1-Subnet1-NSG",
-                        "protocol": "*",
-                        "destinationPortRange": "3389",
-                        "sourceAddressPrefix": "*",
-                        "direction": "Inbound"
-                    },
-                    {
-                        "name": "Spoke1-Subnet2-NSG",
-                        "protocol": "*",
-                        "destinationPortRange": "22",
-                        "sourceAddressPrefix": "*",
-                        "direction": "Inbound"
-                    },
-                    {
-                        "name": "Spoke2-Subnet1-NSG",
-                        "protocol": "*",
-                        "destinationPortRange": "22",
-                        "sourceAddressPrefix": "*",
-                        "direction": "Inbound"
+                        "rules": [
+                            {
+                                "ruleName": "Rule1",
+                                "protocol": "*",
+                                "direction": "Inbound",
+                                "access": "Allow",
+                                "sourcePortRange": "*",
+                                "sourceAddressPrefix": "192.168.0.0/24",
+                                "destinationPortRange": "3389",
+                                "destinationAddressPrefix": "*",
+                                "priority": 110
+                            },
+                            {
+                                "ruleName": "Rule2",
+                                "protocol": "*",
+                                "direction": "Inbound",
+                                "access": "Allow",
+                                "sourcePortRange": "*",
+                                "sourceAddressPrefix": "192.168.0.0/24",
+                                "destinationPortRange": "22",
+                                "destinationAddressPrefix": "*",
+                                "priority": 120
+                            }
+                        ]
                     }
                 ]
             }

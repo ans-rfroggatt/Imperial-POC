@@ -91,6 +91,56 @@
                         "sourceAddressPrefix": "*",
                         "direction": "Inbound"
                     }
+                ],
+                "securitygroups": [
+                    {
+                        "name": "Windows-Desktop-NSG",
+                        "rules": [
+                            {
+                                "ruleName": "Rule1",
+                                "protocol": "*",
+                                "direction": "Inbound",
+                                "access": "Allow",
+                                "sourcePortRange": "*",
+                                "sourceAddressPrefix": "192.168.0.0/24",
+                                "destinationPortRange": "3389",
+                                "destinationAddressPrefix": "*",
+                                "priority": 110
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Linux-Desktop-NSG",
+                        "rules": [
+                            {
+                                "ruleName": "Rule1",
+                                "protocol": "*",
+                                "direction": "Inbound",
+                                "access": "Allow",
+                                "sourcePortRange": "*",
+                                "sourceAddressPrefix": "192.168.0.0/24",
+                                "destinationPortRange": "22",
+                                "destinationAddressPrefix": "*",
+                                "priority": 110
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Batch-NSG",
+                        "rules": [
+                            {
+                                "ruleName": "Rule1",
+                                "protocol": "*",
+                                "direction": "Inbound",
+                                "access": "Allow",
+                                "sourcePortRange": "*",
+                                "sourceAddressPrefix": "192.168.0.0/24",
+                                "destinationPortRange": "22",
+                                "destinationAddressPrefix": "*",
+                                "priority": 110
+                            }
+                        ]
+                    }
                 ]
             }
         }
