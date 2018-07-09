@@ -42,27 +42,25 @@
             "apiVersion": "2017-10-01",
             "location": "[resourceGroup().location]",
             "properties": {
-                "securityRules": {
-                    "copy": [
-                        {
-                            "name": "rulecopy",
-                            "count": "[length(parameters('securitygroup').nsgrules)]",
-                            "input": {
-                                "name": "[parameters('securitygroup')nsgrules[copyIndex('rulecopy')].ruleName]",
-                                "properties": {
-                                    "protocol": "[parameters('securitygroup').nsgrules[copyIndex('rulecopy')].protocol]",
-                                    "sourcePortRange": "[parameters('securitygroup').nsgrules[copyIndex('rulecopy')].sourcePortRange]",
-                                    "destinationPortRange": "[parameters('securitygroup').nsgrules[copyIndex('rulecopy')].destinationPortRange]",
-                                    "sourceAddressPrefix": "[parameters('securitygroup').nsgrules[copyIndex('rulecopy')].sourceAddressPrefix]",
-                                    "destinationAddressPrefix": "[parameters('securitygroup').nsgrules[copyIndex('rulecopy')].destinationAddressPrefix]",
-                                    "access": "[parameters('securitygroup').nsgrules[copyIndex('rulecopy')].access]",
-                                    "priority": "[parameters('securitygroup').nsgrules[copyIndex('rulecopy')].priority]",
-                                    "direction": "[parameters('securitygroup').nsgrules[copyIndex('rulecopy')].direction]"
-                                }
+                "copy": [
+                    {
+                        "name": "securityRules",
+                        "count": "[length(parameters('securitygroup').nsgrules)]",
+                        "input": {
+                            "name": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].ruleName]",
+                            "properties": {
+                                "protocol": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].protocol]",
+                                "sourcePortRange": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].sourcePortRange]",
+                                "destinationPortRange": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].destinationPortRange]",
+                                "sourceAddressPrefix": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].sourceAddressPrefix]",
+                                "destinationAddressPrefix": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].destinationAddressPrefix]",
+                                "access": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].access]",
+                                "priority": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].priority]",
+                                "direction": "[parameters('securitygroup').nsgrules[copyIndex('securityRules')].direction]"
                             }
                         }
-                    ]
-                }
+                    }
+                ]
             }
         }
     ],

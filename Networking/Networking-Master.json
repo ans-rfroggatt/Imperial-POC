@@ -203,7 +203,7 @@
             }
         },
         {
-            "name": "deployNsg",
+            "name": "[concat('deployNsg', copyIndex(1), '-', parameters('securitygroups')[copyIndex()].name)]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
             "resourceGroup": "[parameters('securitygroups')[copyIndex()].resourceGroup]",
