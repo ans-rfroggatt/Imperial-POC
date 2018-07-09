@@ -141,7 +141,7 @@
             "apiVersion": "2017-05-10",
             "resourceGroup": "[parameters('hub').resourceGroup]",
             "dependsOn": [
-                "[concat('deployNsg', copyIndex(1), '-', parameters('securitygroups')[copyIndex()].name)]"
+                "nsgcopy"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -175,7 +175,7 @@
             "resourceGroup": "[parameters('spokes')[copyIndex()].resourceGroup]",
             "dependsOn": [
                 "[concat('Microsoft.Resources/deployments/', variables('hubDeploymentName'))]",
-                "[concat('deployNsg', copyIndex(1), '-', parameters('securitygroups')[copyIndex()].name)]"
+                "nsgcopy"
             ],
             "copy": {
                 "name": "spokecopy",
