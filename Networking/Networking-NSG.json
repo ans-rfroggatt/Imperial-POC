@@ -67,7 +67,7 @@
                     "copy": [
                         {
                             "name": "rulecopy",
-                            "count": "[length(parameters('securitygroups').securitygroups[copyIndex('nsgloop')].nsgrules)]",
+                            "count": "[length(parameters('securitygroups')[copyIndex('nsgloop')].nsgrules)]",
                             "input": {
                                 "name": "[parameters('securitygroups')[copyIndex('nsgloop')].nsgrules[copyIndex('rulecopy')].ruleName]",
                                 "properties": {
